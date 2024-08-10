@@ -2,6 +2,7 @@
 This library is a cross-plattform generator and validator for Windows 95 keys written in Rust. As it turned out, however, it supposedly works for all Microsoft products that require a 10-digit product key in the following format: _`XXX-XXXXXXX`_
 
 It is only sporadically developed as it is solely a learning project for me and does not have particularly significant practical use.
+
 ⚠️ **Note**: keyforge95 and I are in no way associated with Microsoft or their products. Only [publicly available information](https://en.wikipedia.org/wiki/Product_key#Examples) from the internet has been used to create this project. It neither bypasses effective copy measures nor constitutes a "crack." The purpose of this repository, from my perspective, is solely to gain experience in programming and enhance my skills and knowledge.
 
 ## Compatible Software
@@ -50,5 +51,5 @@ match validate_product_key(product_key) {
 
 ## Contributing
 
-Anyone who wants to contribute is more than welcome to do so. I would be delighted to learn from the contributions of other users. If you find a bug or have a feature in mind that you think would be useful, please feel free to create an issue or a pull request here on GitHub.
+Anyone who wants to contribute is more than welcome to do so. I would be delighted to learn from the contributions of other users. If you find a bug or have a feature in mind that you think would be useful, please feel free to create a pull request on GitHub.
 If you decide to fork this project, please make sure to adhere to the [license](https://github.com/nandolawson/keyforge95/blob/master/LICENSE). Your involvement and feedback are highly appreciated!

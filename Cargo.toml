@@ -2,7 +2,7 @@
 name = "keyforge95"
 description = "Library for product key generation / validation for Windows 95 and other Microsoft products"
 authors = ["Nando Lawson"]
-version = "1.0.0"
+version = "1.0.1"
 readme = "README.md"
 license = "GPL-3.0"
 exclude = ["target/", ".github/", ".gitignore"]
