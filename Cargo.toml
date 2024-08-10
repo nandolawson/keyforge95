@@ -1,0 +1,20 @@
+[package]
+name = "keyforge95"
+description = "Library for product key generation / validation for Windows 95 and other Microsoft products"
+authors = ["Nando Lawson"]
+version = "1.0.0"
+readme = "README.md"
+license = "GPL-3.0"
+exclude = ["target/", ".github/", ".gitignore"]
+repository = "https://github.com/nandolawson/keyforge95"
+edition = "2021"
+
+[dependencies]
+rand = "0.8.5"
+
+[profile.release]
+opt-level = "z"
+lto = true
+strip = true
+codegen-units = 1
+panic = "abort"
