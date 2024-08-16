@@ -42,7 +42,7 @@ To check the validity of a key, add keyforge95 to your project and use _`validat
 
 ```rs
 use keyforge95::validate_product_key;
-let product_key: &str = 000-0000000
+let product_key: &str = "000-0000000"
 match validate_product_key(product_key) {
     true => println!("Valid key: {}", product_key),
     false => println!("Invalid key: {}", product_key)
