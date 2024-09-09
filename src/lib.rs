@@ -13,7 +13,7 @@ This file may not be copied, modified, or distributed except according to those 
 #![doc = include_str!("../README.md")] // Adding the README to the documentation
 
 // Dependencies
-use std::ops::RangeInclusive;
+use core::ops::RangeInclusive;
 use std::process::exit;
 use rand::Rng;
 
