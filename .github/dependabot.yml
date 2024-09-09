@@ -4,3 +4,6 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+      time: "00:00"
+      timezone: "Europe/Berlin"
+    versioning-strategy: auto
