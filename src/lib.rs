@@ -14,6 +14,7 @@ This file may not be copied, modified, or distributed except according to those 
 
 // Dependencies
 use std::ops::RangeInclusive;
+use std::process::exit;
 use rand::Rng;
 
 //Public Functions
@@ -113,8 +114,10 @@ fn generate_block(choice: &str) -> String {
     };
     let length: usize = if choice == "a" {
         3 // The length of block a
-    } else { // Lieber einen Error Code als dass alles bis auf a direkt b ist
+    } else if choice == "b" {
         7 // The length of block b
+    } else {
+        exit(1);
     };
     // Generate a block and validate it
     loop { // Loop this operation if it fails
