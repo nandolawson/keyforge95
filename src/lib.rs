@@ -117,6 +117,7 @@ fn generate_block(choice: &str) -> String {
     } else if choice == "b" {
         7 // The length of block b
     } else {
+        eprintln!("Invalid choice: {choice}");
         exit(1);
     };
     // Generate a block and validate it

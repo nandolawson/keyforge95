@@ -2,7 +2,9 @@
 name = "keyforge95"
 description = "Library for product key generation / validation for Windows 95 and other Microsoft products"
 authors = ["Nando Lawson"]
-version = "1.0.2"
+version = "1.0.3"
+categories = ["algorithms", "development-tools"]
+keywords = ["windows", "product", "key", "generator", "validator"]
 readme = "README.md"
 license = "GPL-3.0"
 exclude = ["target/", ".github/", ".gitignore"]
@@ -18,3 +20,13 @@ lto = true
 strip = true
 codegen-units = 1
 panic = "abort"
+
+[lints.clippy]
+cargo = "deny"
+complexity = "deny"
+correctness = "deny"
+pedantic = "allow"
+perf = "deny"
+restriction = "allow"
+style = "deny"
+suspicious = "deny"
