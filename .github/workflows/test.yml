@@ -28,8 +28,8 @@ jobs:
     - name: Run doctests
       run: cargo test --doc --verbose
     - uses: actions/checkout@v1
-    - name: Check code for possible optimizations
-    - run: rustup component add clippy
+    - name: Check for possible code optimization
+      run: rustup component add clippy
     - uses: actions-rs/clippy-check@v1
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
