@@ -1,4 +1,5 @@
 # keyforge95
+
 This library is a cross-plattform generator and validator for Windows 95 keys written in Rust. As it turned out, however, it supposedly works for all Microsoft products that require a 10-digit product key in the following format: _`XXX-XXXXXXX`_
 
 It is only sporadically developed as it is solely a learning project for me and does not have particularly significant practical use.
