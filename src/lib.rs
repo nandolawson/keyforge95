@@ -49,16 +49,14 @@ use rand::Rng;
 ///     assert_eq!(validate_product_key(test_case), false);
 /// }
 /// ```
+#[must_use]
 pub fn validate_product_key(product_key: &str) -> bool {
-    match validate_format(product_key) { // Check if the product key format is valid
-        true => {
-            matches!((
-                validate_block(&product_key[0..=2]), // Check if first block is valid
-                validate_block(&product_key[4..=10]) // Check if second block is valid
-            ), (true, true))
-        }
-        false => false
-    }
+    if validate_format(product_key) { // Check if the product key format is valid
+        matches!((
+            validate_block(&product_key[0..=2]), // Check if first block is valid
+            validate_block(&product_key[4..=10]) // Check if second block is valid
+        ), (true, true))
+    } else {false}
 }
 
 /// Generates a valid product key
@@ -73,6 +71,7 @@ pub fn validate_product_key(product_key: &str) -> bool {
 ///     assert_eq!(product_key.chars().nth(3).unwrap(), '-');
 /// }
 /// ```
+#[must_use]
 pub fn generate_product_key() -> String {
     // Use generate_block() for product key generation and print it with the right format
     format!("{}-{}", generate_block("a"), generate_block("b"))
@@ -83,8 +82,8 @@ pub fn generate_product_key() -> String {
 fn validate_format(product_key: &str) -> bool {
     if product_key.len() == 11 { // The length of the product key must be 11 digits
         matches!((
-            product_key[0..=2].chars().all(|c| c.is_numeric()), // Block must not contain anything else than numbers
-            product_key[4..=10].chars().all(|c| c.is_numeric()), // Same rule for block b
+            product_key[0..=2].chars().all(char::is_numeric), // Block must not contain anything else than numbers
+            product_key[4..=10].chars().all(char::is_numeric), // Same rule for block b
             product_key.chars().nth(3) == Some('-'), // The fourth character must be a tie rope
         ), (true, true, true))
     } else {false}
@@ -110,7 +109,7 @@ fn generate_block(choice: &str) -> String {
     let range: RangeInclusive<u32> = if choice == "a" {
         000..=998 // The number range for block a
     } else {
-        0000000..=8888888 // The number range for block b
+        0_000_000..=8_888_888 // The number range for block b
     };
     let length: usize = if choice == "a" {
         3 // The length of block a
