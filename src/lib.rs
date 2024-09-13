@@ -47,7 +47,7 @@ use std::process::exit;
 ///     "123-4567-89-00-AB4"
 /// ];
 /// for test_case in test_cases {
-///     assert_eq!(validate_product_key(test_case), false);
+///     assert!(!validate_product_key(test_case));
 /// }
 /// ```
 #[must_use]
@@ -153,7 +153,7 @@ fn generate_block(choice: &str) -> String {
 #[test]
 fn test_validate_format() {
     let product_key: &str = "000-0000000"; // This key should be formatted correctly
-    assert_eq!(validate_product_key(product_key), true);
+    assert!(validate_product_key(product_key));
     let test_cases: [&str; 5] = [
         // This keys should be formatted incorrectly
         "000-00000000",
@@ -163,7 +163,7 @@ fn test_validate_format() {
         "A-A-A-A-A",
     ];
     for test_case in test_cases {
-        assert_eq!(validate_format(test_case), false);
+        assert!(!validate_format(test_case));
     }
 }
 #[test]
@@ -173,14 +173,14 @@ fn test_validate_block() {
         "111", "334", "998", "1111111", "8888888",
     ];
     for test_case in test_cases {
-        assert_eq!(validate_block(test_case), true);
+        assert!(validate_block(test_case));
     }
     let test_cases: [&str; 5] = [
         // This blocks should be invalid
         "333", "999", "0", "9999999", "000000",
     ];
     for test_case in test_cases {
-        assert_eq!(validate_block(test_case), false);
+        assert!(!validate_block(test_case));
     }
 }
 #[test]
