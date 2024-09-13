@@ -32,7 +32,7 @@ use rand::Rng;
 ///     "901-2345678"
 /// ];
 /// for test_case in test_cases {
-///      assert_eq!(validate_product_key(test_case), true);
+///      assert!(validate_product_key(test_case));
 /// }
 /// ```
 ///
@@ -51,15 +51,26 @@ use rand::Rng;
 /// ```
 #[must_use]
 pub fn validate_product_key(product_key: &str) -> bool {
-    if validate_format(product_key) {
-        // Check if the product key format is valid
-        matches!(
-            (
-                validate_block(&product_key[0..=2]), // Check if first block is valid
-                validate_block(&product_key[4..=10])  // Check if second block is valid
-            ),
-            (true, true)
-        )
+    if validate_format(product_key) { // Check if the product key format is valid
+        if product_key.len() == 11 {
+            matches!( // Retail product key
+                (
+                    validate_block(&product_key[0..=2]), // Check if first block is valid
+                    validate_block(&product_key[4..=10])  // Check if second block is valid
+                ),
+                (true, true)
+            )
+        } else if product_key.len() == 23 { // OEM product key
+            matches!(
+                (
+                    validate_block(&product_key[0..=4]), // Check if first block is valid
+                    validate_block(&product_key[10..=16])  // Check if second block is valid
+                ),
+                (true, true)
+            )
+        } else {
+            false
+        }
     } else {
         false
     }
@@ -72,29 +83,47 @@ pub fn validate_product_key(product_key: &str) -> bool {
 /// ```
 /// use keyforge95::generate_product_key;
 /// for _ in 0..10 {
-///     let product_key: String = generate_product_key();
+///     let product_key: String = generate_product_key("retail"); // Both, "retail" and "oem" are available
 ///     assert_eq!(product_key.len(), 11);
 ///     assert_eq!(product_key.chars().nth(3).unwrap(), '-');
 /// }
 /// ```
 #[must_use]
-pub fn generate_product_key() -> String {
-    // Use generate_block() for product key generation and print it with the right format
-    format!("{}-{}", generate_block("a"), generate_block("b"))
+pub fn generate_product_key(key_type: &str) -> String {
+    match key_type {
+        "retail" => {
+            // Use generate_block() for product key generation and print it with the right format
+            format!("{}-{}", generate_block("a"), generate_block("b"))
+        }
+        _ => {
+            panic!("Invalid choice: {key_type}. Only 'retail' or 'oem' allowed.");
+        }
+    }
 }
 
 // Functions
 
 fn validate_format(product_key: &str) -> bool {
-    if product_key.len() == 11 {
-        // The length of the product key must be 11 digits
+    // The length of the product key must be 11 or 23 digits
+    if product_key.len() == 11 { // Retail product key
         matches!(
             (
                 product_key[0..=2].chars().all(char::is_numeric), // Block must not contain anything else than numbers
-                product_key[4..=10].chars().all(char::is_numeric), // Same rule for block b
+                product_key[4..=10].chars().all(char::is_numeric), // Same rule for this block
                 product_key.chars().nth(3) == Some('-'), // The fourth character must be a tie rope
             ),
             (true, true, true)
+        )
+    } else if product_key.len() == 23 { // OEM product key
+        matches!(
+            (
+                product_key[0..=4].chars().all(char::is_numeric), // Block must not contain anything else than numbers
+                product_key[10..=16].chars().all(char::is_numeric), // Same rule for this block
+                product_key[18..=22].chars().all(char::is_numeric), // Same rule for this block
+                product_key.chars().nth(17) == Some('-'), // The seventeenth character must be a tie rope
+                &product_key[5..=9] == "-OEM-", // Check if the second block is "-OEM-"
+            ),
+            (true, true, true, true, true)
         )
     } else {
         false
@@ -103,42 +132,40 @@ fn validate_format(product_key: &str) -> bool {
 
 fn validate_block(block: &str) -> bool {
     // First determine the block of the product key per length of the block
-    if block.len() == 3 {
-        // Block a
+    if block.len() == 3 { // Block a
         !((3..=9).contains(&(block.parse::<i32>().unwrap() / 111)) // This block must not contain a lucky number between 333 and 999
             && block.parse::<i32>().unwrap() % 111 == 0)
-    } else if block.len() == 7 {
-        // Block b
+    } else if block.len() == 5 { // Block b
+        (0..=366).contains(&block[0..=2].parse::<u16>().unwrap()) // The first three digits must be a number between 0 and 366
+            && (4..=93).contains(&block[3..=4].parse::<u8>().unwrap()) // The last two digits must be a number between 4 and 93
+    } else if block.len() == 7 { // Block c
         matches!(
             (
                 block.contains('9'), // The number 9 is not allowed for this block
-                block.chars().filter_map(|c| c.to_digit(10)).sum::<u32>() % 7 == 0 // The sum of this block must be divisible by 7 with no remainder
+                block.chars().filter_map(|c: char| c.to_digit(10)).sum::<u32>() % 7 == 0 // The sum of this block must be divisible by 7 with no remainder
             ),
             (false, true)
         )
-    } else {
-        // Only used if the block size is neither 3 nor 7
+    } else { // Only used if the block size is neither one of the above ones
         false
     }
 }
 
 fn generate_block(choice: &str) -> String {
     match choice {
-        "a" | "b" => {
-            // Determine which block of the product key will be generated
+        "a" | "b" => { // Determine which block of the product key will be generated
             let range: RangeInclusive<u32> = if choice == "a" {
                 000..=998 // The number range for block a
             } else {
-                0_000_000..=8_888_888 // The number range for block b
+                0_000_000..=8_888_888 // The number range for block c
             };
             let length: usize = if choice == "a" {
                 3 // The length of block a
             } else {
-                7 // The length of block b
+                7 // The length of block c
             };
             // Generate a block and validate it
-            loop {
-                // Loop this operation if it fails
+            loop { // Loop this operation if it fails
                 let block: String =
                     format!("{:0length$}", rand::thread_rng().gen_range(range.clone())); // Generate a block of the product key
                 if validate_block(&block) {
@@ -156,10 +183,14 @@ fn generate_block(choice: &str) -> String {
 
 #[test]
 fn test_validate_format() {
-    let product_key: &str = "000-0000000"; // This key should be formatted correctly
-    assert!(validate_product_key(product_key));
-    let test_cases: [&str; 5] = [
-        // This keys should be formatted incorrectly
+    let test_cases: [&str; 2] = [ // This key should be formatted correctly
+        "000-0000000",
+        "00004-OEM-0000000-00000"
+    ];
+    for test_case in test_cases {
+        assert!(validate_format(test_case));
+    }
+    let test_cases: [&str; 5] = [ // These keys are formatted incorrectly
         "000-00000000",
         "0000-0000000",
         "0-0",
@@ -172,16 +203,14 @@ fn test_validate_format() {
 }
 #[test]
 fn test_validate_block() {
-    let test_cases: [&str; 5] = [
-        // This blocks should be valid
-        "111", "334", "998", "1111111", "8888888",
+    let test_cases: [&str; 6] = [ // These blocks are valid
+        "334", "998", "1111111", "8888888", "36693", "00004",
     ];
     for test_case in test_cases {
         assert!(validate_block(test_case));
     }
-    let test_cases: [&str; 5] = [
-        // This blocks should be invalid
-        "333", "999", "0", "9999999", "000000",
+    let test_cases: [&str; 7] = [ // This blocks are invalid
+        "333", "999", "0", "9999999", "000000", "36793", "36694",
     ];
     for test_case in test_cases {
         assert!(!validate_block(test_case));
@@ -190,7 +219,7 @@ fn test_validate_block() {
 #[test]
 fn test_generate_block() {
     for _ in 0..10 {
-        // Generates both blocks
+        // Generates all blocks
         assert_eq!(generate_block("a").len(), 3); // First block
         assert_eq!(generate_block("b").len(), 7); // Second block
     }
