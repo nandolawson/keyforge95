@@ -19,6 +19,31 @@ use rand::Rng;
 
 //Public Functions
 
+/// Generates a valid product key
+///
+/// # Example
+///
+/// ```
+/// use keyforge95::generate_product_key;
+/// for _ in 0..10 {
+///     let product_key: String = generate_product_key("retail"); // Both, "retail" and "oem" are available
+///     assert_eq!(product_key.len(), 11);
+///     assert_eq!(product_key.chars().nth(3).unwrap(), '-');
+/// }
+/// ```
+#[must_use]
+pub fn generate_product_key(key_type: &str) -> String {
+    match key_type {
+        "retail" => {
+            // Use generate_block() for product key generation and print it with the right format
+            format!("{}-{}", generate_block("a"), generate_block("b"))
+        }
+        _ => {
+            panic!("Invalid choice: {key_type}. Only 'retail' or 'oem' allowed.");
+        }
+    }
+}
+
 /// Tests if a product key is valid
 ///
 /// # Examples
@@ -73,31 +98,6 @@ pub fn validate_product_key(product_key: &str) -> bool {
         }
     } else {
         false
-    }
-}
-
-/// Generates a valid product key
-///
-/// # Example
-///
-/// ```
-/// use keyforge95::generate_product_key;
-/// for _ in 0..10 {
-///     let product_key: String = generate_product_key("retail"); // Both, "retail" and "oem" are available
-///     assert_eq!(product_key.len(), 11);
-///     assert_eq!(product_key.chars().nth(3).unwrap(), '-');
-/// }
-/// ```
-#[must_use]
-pub fn generate_product_key(key_type: &str) -> String {
-    match key_type {
-        "retail" => {
-            // Use generate_block() for product key generation and print it with the right format
-            format!("{}-{}", generate_block("a"), generate_block("b"))
-        }
-        _ => {
-            panic!("Invalid choice: {key_type}. Only 'retail' or 'oem' allowed.");
-        }
     }
 }
 
