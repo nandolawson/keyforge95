@@ -103,6 +103,34 @@ pub fn generate_product_key(key_type: &str) -> String {
 
 // Functions
 
+fn generate_block(choice: &str) -> String {
+    match choice {
+        "a" | "b" => { // Determine which block of the product key will be generated
+            let range: RangeInclusive<u32> = if choice == "a" {
+                000..=998 // The number range for block a
+            } else {
+                0_000_000..=8_888_888 // The number range for block c
+            };
+            let length: usize = if choice == "a" {
+                3 // The length of block a
+            } else {
+                7 // The length of block c
+            };
+            // Generate a block and validate it
+            loop { // Loop this operation if it fails
+                let block: String =
+                    format!("{:0length$}", rand::thread_rng().gen_range(range.clone())); // Generate a block of the product key
+                if validate_block(&block) {
+                    return block; // Exit the loop if the block validates successfully
+                }
+            }
+        }
+        _ => {
+            panic!("Invalid choice: {choice}. Only 'a' or 'b' allowed.");
+        }
+    }
+}
+
 fn validate_format(product_key: &str) -> bool {
     // The length of the product key must be 11 or 23 digits
     if product_key.len() == 11 { // Retail product key
@@ -151,36 +179,32 @@ fn validate_block(block: &str) -> bool {
     }
 }
 
-fn generate_block(choice: &str) -> String {
-    match choice {
-        "a" | "b" => { // Determine which block of the product key will be generated
-            let range: RangeInclusive<u32> = if choice == "a" {
-                000..=998 // The number range for block a
-            } else {
-                0_000_000..=8_888_888 // The number range for block c
-            };
-            let length: usize = if choice == "a" {
-                3 // The length of block a
-            } else {
-                7 // The length of block c
-            };
-            // Generate a block and validate it
-            loop { // Loop this operation if it fails
-                let block: String =
-                    format!("{:0length$}", rand::thread_rng().gen_range(range.clone())); // Generate a block of the product key
-                if validate_block(&block) {
-                    return block; // Exit the loop if the block validates successfully
-                }
-            }
-        }
-        _ => {
-            panic!("Invalid choice: {choice}. Only 'a' or 'b' allowed.");
-        }
+// Tests
+
+#[test]
+fn test_generate_block() {
+    for _ in 0..10 {
+        // Generates all blocks
+        assert_eq!(generate_block("a").len(), 3); // First block
+        assert_eq!(generate_block("b").len(), 7); // Second block
     }
 }
 
-// Tests
-
+#[test]
+fn test_validate_block() {
+    let test_cases: [&str; 6] = [ // These blocks are valid
+        "334", "998", "1111111", "8888888", "36693", "00004",
+    ];
+    for test_case in test_cases {
+        assert!(validate_block(test_case));
+    }
+    let test_cases: [&str; 7] = [ // This blocks are invalid
+        "333", "999", "0", "9999999", "000000", "36793", "36694",
+    ];
+    for test_case in test_cases {
+        assert!(!validate_block(test_case));
+    }
+}
 #[test]
 fn test_validate_format() {
     let test_cases: [&str; 2] = [ // This key should be formatted correctly
@@ -199,28 +223,5 @@ fn test_validate_format() {
     ];
     for test_case in test_cases {
         assert!(!validate_format(test_case));
-    }
-}
-#[test]
-fn test_validate_block() {
-    let test_cases: [&str; 6] = [ // These blocks are valid
-        "334", "998", "1111111", "8888888", "36693", "00004",
-    ];
-    for test_case in test_cases {
-        assert!(validate_block(test_case));
-    }
-    let test_cases: [&str; 7] = [ // This blocks are invalid
-        "333", "999", "0", "9999999", "000000", "36793", "36694",
-    ];
-    for test_case in test_cases {
-        assert!(!validate_block(test_case));
-    }
-}
-#[test]
-fn test_generate_block() {
-    for _ in 0..10 {
-        // Generates all blocks
-        assert_eq!(generate_block("a").len(), 3); // First block
-        assert_eq!(generate_block("b").len(), 7); // Second block
     }
 }
