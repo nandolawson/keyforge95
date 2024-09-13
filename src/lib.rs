@@ -16,7 +16,6 @@ This file may not be copied, modified, or distributed except according to those 
 
 use core::ops::RangeInclusive;
 use rand::Rng;
-use std::process::exit;
 
 //Public Functions
 
@@ -124,26 +123,31 @@ fn validate_block(block: &str) -> bool {
 }
 
 fn generate_block(choice: &str) -> String {
-    // Determine which block of the product key will be generated
-    let range: RangeInclusive<u32> = if choice == "a" {
-        000..=998 // The number range for block a
-    } else {
-        0_000_000..=8_888_888 // The number range for block b
-    };
-    let length: usize = if choice == "a" {
-        3 // The length of block a
-    } else if choice == "b" {
-        7 // The length of block b
-    } else {
-        eprintln!("Invalid choice: {choice}");
-        exit(1);
-    };
-    // Generate a block and validate it
-    loop {
-        // Loop this operation if it fails
-        let block: String = format!("{:0length$}", rand::thread_rng().gen_range(range.clone())); // Generate a block of the product key
-        if validate_block(&block) {
-            return block; // Exit the loop if the block validates successfully
+    match choice {
+        "a" | "b" => {
+            // Determine which block of the product key will be generated
+            let range: RangeInclusive<u32> = if choice == "a" {
+                000..=998 // The number range for block a
+            } else {
+                0_000_000..=8_888_888 // The number range for block b
+            };
+            let length: usize = if choice == "a" {
+                3 // The length of block a
+            } else {
+                7 // The length of block b
+            };
+            // Generate a block and validate it
+            loop {
+                // Loop this operation if it fails
+                let block: String =
+                    format!("{:0length$}", rand::thread_rng().gen_range(range.clone())); // Generate a block of the product key
+                if validate_block(&block) {
+                    return block; // Exit the loop if the block validates successfully
+                }
+            }
+        }
+        _ => {
+            panic!("Invalid choice: {choice}. Only 'a' or 'b' allowed.");
         }
     }
 }
