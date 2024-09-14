@@ -29,7 +29,7 @@ This library only has two public functions: _`generate_product_key()`_ and _`val
 
 ### Generate
 
-After adding keyforge95 to your project, just use _`generate_product_key()`_ to generate a valid product key as a String.
+After adding keyforge95 to your project, just use _`generate_product_key("retail" / "oem")`_ to generate a valid product key as a String.
 
 ```rs
 use keyforge95::generate_product_key;
@@ -39,7 +39,7 @@ println("Generated product key: {}", product_key);
 
 ### Validate
 
-To check the validity of a key, add keyforge95 to your project and use _`validate_product_key("key")`_. This function returns a bool. It is important that the right formatting (_`XXX-XXXXXXX`_) is used for the product key. Otherwise the validation will fail.
+To check the validity of a key, add keyforge95 to your project and use _`validate_product_key("key")`_. This function returns a bool. It is important that the right formatting (_`XXX-XXXXXXX`_) is used for the product key. Otherwise, the validation will fail.
 
 ```rs
 use keyforge95::validate_product_key;
