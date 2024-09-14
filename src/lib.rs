@@ -33,10 +33,13 @@ use rand::Rng;
 /// ```
 #[must_use]
 pub fn generate_product_key(key_type: &str) -> String {
+    // Use generate_block() for product key generation and print it with the right format
     match key_type {
         "retail" => {
-            // Use generate_block() for product key generation and print it with the right format
-            format!("{}-{}", generate_block("a"), generate_block("b"))
+            format!("{}-{}", generate_block("a"), generate_block("c"))
+        }
+        "oem" => {
+            format!("{}-OEM-{}-00000", generate_block("b"), generate_block("c"))
         }
         _ => {
             panic!("Invalid choice: {key_type}. Only 'retail' or 'oem' allowed.");
@@ -76,16 +79,19 @@ pub fn generate_product_key(key_type: &str) -> String {
 /// ```
 #[must_use]
 pub fn validate_product_key(product_key: &str) -> bool {
-    if validate_format(product_key) { // Check if the product key format is valid
+    if validate_format(product_key) {
+        // Check if the product key format is valid
         if product_key.len() == 11 {
-            matches!( // Retail product key
+            matches!(
+                // Retail product key
                 (
                     validate_block(&product_key[0..=2]), // Check if first block is valid
                     validate_block(&product_key[4..=10])  // Check if second block is valid
                 ),
                 (true, true)
             )
-        } else if product_key.len() == 23 { // OEM product key
+        } else if product_key.len() == 23 {
+            // OEM product key
             matches!(
                 (
                     validate_block(&product_key[0..=4]), // Check if first block is valid
@@ -104,36 +110,43 @@ pub fn validate_product_key(product_key: &str) -> bool {
 // Functions
 
 fn generate_block(choice: &str) -> String {
-    match choice {
-        "a" | "b" => { // Determine which block of the product key will be generated
-            let range: RangeInclusive<u32> = if choice == "a" {
-                000..=998 // The number range for block a
-            } else {
-                0_000_000..=8_888_888 // The number range for block c
-            };
-            let length: usize = if choice == "a" {
-                3 // The length of block a
-            } else {
-                7 // The length of block c
-            };
-            // Generate a block and validate it
-            loop { // Loop this operation if it fails
-                let block: String =
-                    format!("{:0length$}", rand::thread_rng().gen_range(range.clone())); // Generate a block of the product key
-                if validate_block(&block) {
-                    return block; // Exit the loop if the block validates successfully
-                }
-            }
-        }
-        _ => {
-            panic!("Invalid choice: {choice}. Only 'a' or 'b' allowed.");
+    // Determine which block of the product key will be generated
+    let range: RangeInclusive<u32> = if choice == "a" {
+        0..=998 // The number range for block a 
+    } else if choice == "b" {
+        0..=366
+    } else if choice == "c" {
+        0..=8_888_888 // The number range for block c
+    } else {
+        panic!("Invalid choice: {choice}. Only 'a', 'b' and 'c' allowed.");
+    };
+    let length: usize = if choice == "a" {
+        3 // Length of block a
+    } else if choice == "b" {
+        5 // Length of block b
+    } else if choice == "c" {
+        7 // Length of block c
+    } else {
+        panic!("Invalid choice: {choice}. Only 'a', 'b' and 'c' allowed.");
+    };
+    // Generate a block and validate it
+    loop {
+        // Loop this operation if it fails
+        let block: String = if length == 5 {
+            format!("{:03}{:02}", rand::thread_rng().gen_range(range.clone()), rand::thread_rng().gen_range(4..=93)) // Generate block c of the product key
+        } else {
+            format!("{:0length$}", rand::thread_rng().gen_range(range.clone())) // Generate a block of the product key
+        };
+        if validate_block(&block) {
+            return block; // Exit the loop if the block validates successfully
         }
     }
 }
 
 fn validate_format(product_key: &str) -> bool {
     // The length of the product key must be 11 or 23 digits
-    if product_key.len() == 11 { // Retail product key
+    if product_key.len() == 11 {
+        // Retail product key
         matches!(
             (
                 product_key[0..=2].chars().all(char::is_numeric), // Block must not contain anything else than numbers
@@ -142,14 +155,15 @@ fn validate_format(product_key: &str) -> bool {
             ),
             (true, true, true)
         )
-    } else if product_key.len() == 23 { // OEM product key
+    } else if product_key.len() == 23 {
+        // OEM product key
         matches!(
             (
                 product_key[0..=4].chars().all(char::is_numeric), // Block must not contain anything else than numbers
                 product_key[10..=16].chars().all(char::is_numeric), // Same rule for this block
                 product_key[18..=22].chars().all(char::is_numeric), // Same rule for this block
                 product_key.chars().nth(17) == Some('-'), // The seventeenth character must be a tie rope
-                &product_key[5..=9] == "-OEM-", // Check if the second block is "-OEM-"
+                &product_key[5..=9] == "-OEM-",           // Check if the second block is "-OEM-"
             ),
             (true, true, true, true, true)
         )
@@ -160,21 +174,30 @@ fn validate_format(product_key: &str) -> bool {
 
 fn validate_block(block: &str) -> bool {
     // First determine the block of the product key per length of the block
-    if block.len() == 3 { // Block a
+    if block.len() == 3 {
+        // Block a
         !((3..=9).contains(&(block.parse::<i32>().unwrap() / 111)) // This block must not contain a lucky number between 333 and 999
             && block.parse::<i32>().unwrap() % 111 == 0)
-    } else if block.len() == 5 { // Block b
+    } else if block.len() == 5 {
+        // Block b
         (0..=366).contains(&block[0..=2].parse::<u16>().unwrap()) // The first three digits must be a number between 0 and 366
             && (4..=93).contains(&block[3..=4].parse::<u8>().unwrap()) // The last two digits must be a number between 4 and 93
-    } else if block.len() == 7 { // Block c
+    } else if block.len() == 7 {
+        // Block c
         matches!(
             (
                 block.contains('9'), // The number 9 is not allowed for this block
-                block.chars().filter_map(|c: char| c.to_digit(10)).sum::<u32>() % 7 == 0 // The sum of this block must be divisible by 7 with no remainder
+                block
+                    .chars()
+                    .filter_map(|c: char| c.to_digit(10))
+                    .sum::<u32>()
+                    % 7
+                    == 0  // The sum of this block must be divisible by 7 with no remainder
             ),
             (false, true)
         )
-    } else { // Only used if the block size is neither one of the above ones
+    } else {
+        // Only used if the block size is neither one of the above ones
         false
     }
 }
@@ -192,13 +215,15 @@ fn test_generate_block() {
 
 #[test]
 fn test_validate_block() {
-    let test_cases: [&str; 6] = [ // These blocks are valid
+    let test_cases: [&str; 6] = [
+        // These blocks are valid
         "334", "998", "1111111", "8888888", "36693", "00004",
     ];
     for test_case in test_cases {
         assert!(validate_block(test_case));
     }
-    let test_cases: [&str; 7] = [ // This blocks are invalid
+    let test_cases: [&str; 7] = [
+        // This blocks are invalid
         "333", "999", "0", "9999999", "000000", "36793", "36694",
     ];
     for test_case in test_cases {
@@ -207,14 +232,16 @@ fn test_validate_block() {
 }
 #[test]
 fn test_validate_format() {
-    let test_cases: [&str; 2] = [ // This key should be formatted correctly
+    let test_cases: [&str; 2] = [
+        // This key should be formatted correctly
         "000-0000000",
-        "00004-OEM-0000000-00000"
+        "00004-OEM-0000000-00000",
     ];
     for test_case in test_cases {
         assert!(validate_format(test_case));
     }
-    let test_cases: [&str; 5] = [ // These keys are formatted incorrectly
+    let test_cases: [&str; 5] = [
+        // These keys are formatted incorrectly
         "000-00000000",
         "0000-0000000",
         "0-0",
