@@ -232,6 +232,7 @@ fn test_generate_block() {
         assert_eq!(generate_block("a").len(), 3); // First block
         assert_eq!(generate_block("b").len(), 5); // Second block
         assert_eq!(generate_block("c").len(), 7); // Third block
+        assert_eq!(generate_block("d").len(), 7); // Fourth block
     }
 }
 
