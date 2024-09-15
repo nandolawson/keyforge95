@@ -33,7 +33,7 @@ After adding keyforge95 to your project, just use _`generate_product_key("retail
 
 ```rs
 use keyforge95::generate_product_key;
-let product_key: String = generate_product_key();
+let product_key: String = generate_product_key("oem");
 println("Generated product key: {}", product_key);
 ```
 
