@@ -2,7 +2,7 @@
 keyforge95
 Copyright 2024 Nando Lawson
 
-Licensed under the GPL, Version 3 <https://opensource.org/license/gpl-3-0>.
+Licensed under the GPL, Version 3 <https://github.com/nandolawson/keyforge95/blob/main/LICENSE>.
 This file may not be copied, modified, or distributed except according to those terms.
 */
 
