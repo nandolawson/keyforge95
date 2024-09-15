@@ -8,7 +8,9 @@ This file may not be copied, modified, or distributed except according to those 
 
 #![doc(
     html_logo_url = "https://www.rust-lang.org/logos/rust-logo-128x128-blk.png",
-    html_favicon_url = "https://www.rust-lang.org/favicon.ico"
+    html_favicon_url = "https://docs.rs/-/rustdoc.static/favicon-32x32-422f7d1d52889060.png",
+    issue_tracker_base_url = "https://github.com/nandolawson/keyforge95/issues",
+    html_no_source
 )]
 #![doc = include_str!("../README.md")] // Adding the README to the documentation
 
@@ -32,7 +34,7 @@ use rand::Rng;
 /// }
 /// ```
 /// # Panics
-/// 
+///
 /// Will panic if no argument or any argument other than "retail" or "oem" is used.
 #[must_use]
 pub fn generate_product_key(key_type: &str) -> String {
