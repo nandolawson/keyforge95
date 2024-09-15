@@ -44,7 +44,12 @@ pub fn generate_product_key(key_type: &str) -> String {
             format!("{}-{}", generate_block("a"), generate_block("c"))
         }
         "oem" => {
-            format!("{}-OEM-{}-{:05}", generate_block("b"), generate_block("c"), rand::thread_rng().gen_range(0..=99999))
+            format!(
+                "{}-OEM-{}-{:05}",
+                generate_block("b"),
+                generate_block("c"),
+                rand::thread_rng().gen_range(0..=99999)
+            )
         }
         _ => {
             panic!("Invalid choice: {key_type}. Only 'retail' or 'oem' allowed.");
@@ -117,7 +122,11 @@ pub fn validate_product_key(product_key: &str) -> bool {
 fn generate_block(choice: &str) -> String {
     // Determine which block of the product key will be generated
     if choice == "b" {
-        format!("{:03}{:02}", rand::thread_rng().gen_range(0..=366), rand::thread_rng().gen_range(4..=93)) // Generate block c of the product key
+        format!(
+            "{:03}{:02}",
+            rand::thread_rng().gen_range(0..=366),
+            rand::thread_rng().gen_range(4..=93)
+        ) // Generate block c of the product key
     } else {
         let range: RangeInclusive<u32> = if choice == "a" {
             0..=998 // The number range for block a
@@ -138,7 +147,7 @@ fn generate_block(choice: &str) -> String {
             // Loop this operation if it fails
             let block: String = format!("{:0length$}", rand::thread_rng().gen_range(range.clone())); // Generate a block of the product key
             if validate_block(&block) {
-                return block // Exit the loop if the block validates successfully
+                return block; // Exit the loop if the block validates successfully
             }
         }
     }
