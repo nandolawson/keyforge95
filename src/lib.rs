@@ -149,11 +149,11 @@ fn generate_block(choice: &str) -> String {
         loop {
             // Loop this operation if it fails
             let block: String = format!("{:0length$}", rand::thread_rng().gen_range(range.clone())); // Generate a block of the product
-            if choice == "d" { // Exit the loop if the block validates successfully
+            if choice == "d" {
                 if validate_block(format!("{}-", &block).as_str()) {
-                    return block;
+                    return block; // Exit the loop if the block validates successfully
                 }
-            }else if validate_block(&block) {
+            } else if validate_block(&block) {
                 return block; // Exit the loop if the block validates successfully
             }
         }
