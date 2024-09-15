@@ -67,7 +67,7 @@ pub fn generate_product_key(key_type: &str) -> String {
 ///     "000-0000000",
 ///     "332-3333333",
 ///     "334-7777777",
-///     "901-2345678"
+///     "33693-OEM-0000000-00000"
 /// ];
 /// for test_case in test_cases {
 ///      assert!(validate_product_key(test_case));
@@ -80,7 +80,7 @@ pub fn generate_product_key(key_type: &str) -> String {
 ///     "111-1111112",
 ///     "ABC-DEF-GHI",
 ///     "333-3333333",
-///     "111-7777769",
+///     "33703-OEM-1234569-00000",
 ///     "123-4567-89-00-AB4"
 /// ];
 /// for test_case in test_cases {
@@ -105,7 +105,7 @@ pub fn validate_product_key(product_key: &str) -> bool {
             matches!(
                 (
                     validate_block(&product_key[0..=4]), // Check if first block is valid
-                    validate_block(&product_key[10..=16])  // Check if second block is valid
+                    validate_block(&product_key[10..=17])  // Check if second block is valid
                 ),
                 (true, true)
             )
@@ -153,6 +153,40 @@ fn generate_block(choice: &str) -> String {
     }
 }
 
+fn validate_block(block: &str) -> bool {
+    // First determine the block of the product key per length of the block
+    if block.len() == 3 {
+        // Block a
+        !((3..=9).contains(&(block.parse::<i32>().unwrap() / 111)) // This block must not contain a lucky number between 333 and 999
+            && block.parse::<i32>().unwrap() % 111 == 0)
+    } else if block.len() == 5 {
+        // Block b
+        (0..=366).contains(&block[0..=2].parse::<u16>().unwrap()) // The first three digits must be a number between 0 and 366
+            && (4..=93).contains(&block[3..=4].parse::<u8>().unwrap()) // The last two digits must be a number between 4 and 93
+    } else if block.len() == 7 || block.len() == 8 {
+        // Block c
+        matches!(
+            (
+                if block.len() == 8 {
+                    false // Nothing happens here for oem keys
+                } else {
+                    block.contains('9') // The number 9 is not allowed for retail keys
+                },
+                block[0..=6]
+                    .chars()
+                    .filter_map(|c: char| c.to_digit(10))
+                    .sum::<u32>()
+                    % 7
+                    == 0 // The sum of this block must be divisible by 7 with no remainder
+            ),
+            (false, true)
+        )
+    } else {
+        // Only used if the block size is neither one of the above ones
+        false
+    }
+}
+
 fn validate_format(product_key: &str) -> bool {
     // The length of the product key must be 11 or 23 digits
     if product_key.len() == 11 {
@@ -182,36 +216,6 @@ fn validate_format(product_key: &str) -> bool {
     }
 }
 
-fn validate_block(block: &str) -> bool {
-    // First determine the block of the product key per length of the block
-    if block.len() == 3 {
-        // Block a
-        !((3..=9).contains(&(block.parse::<i32>().unwrap() / 111)) // This block must not contain a lucky number between 333 and 999
-            && block.parse::<i32>().unwrap() % 111 == 0)
-    } else if block.len() == 5 {
-        // Block b
-        (0..=366).contains(&block[0..=2].parse::<u16>().unwrap()) // The first three digits must be a number between 0 and 366
-            && (4..=93).contains(&block[3..=4].parse::<u8>().unwrap()) // The last two digits must be a number between 4 and 93
-    } else if block.len() == 7 {
-        // Block c
-        matches!(
-            (
-                block.contains('9'), // The number 9 is not allowed for this block
-                block
-                    .chars()
-                    .filter_map(|c: char| c.to_digit(10))
-                    .sum::<u32>()
-                    % 7
-                    == 0  // The sum of this block must be divisible by 7 with no remainder
-            ),
-            (false, true)
-        )
-    } else {
-        // Only used if the block size is neither one of the above ones
-        false
-    }
-}
-
 // Tests
 
 #[test]
@@ -219,7 +223,8 @@ fn test_generate_block() {
     for _ in 0..10 {
         // Generates all blocks
         assert_eq!(generate_block("a").len(), 3); // First block
-        assert_eq!(generate_block("b").len(), 7); // Second block
+        assert_eq!(generate_block("b").len(), 5); // Second block
+        assert_eq!(generate_block("c").len(), 7); // Third block
     }
 }
 
