@@ -8,20 +8,20 @@ It is only sporadically developed as it is solely a learning project for me and 
 
 ## Compatible Software
 
-- Access ADI 95
-- Hell Bender
-- Office 7.0b
-- Office Professional 95
-- Plus! 95
-- Plus! 98
-- Return to Arcade
-- Windows 95
-- Windows CE Toolkit for Visual Basic 5
-- Windows CE Toolkit for Visual C++ 5
-- Windows NT 4.0 Server
-- Windows NT 4.0 Workstation
-- Visual Basic Standard 4.0
-- Visual SourceSafe 4.0
+- `Access ADI 95`
+- `Hell Bender`
+- `Office 7.0b`
+- `Office Professional 95`
+- `Plus! 95`
+- `Plus! 98`
+- `Return to Arcade`
+- `Windows 95`
+- `Windows CE Toolkit for Visual Basic 5`
+- `Windows CE Toolkit for Visual C++ 5`
+- `Windows NT 4.0 Server`
+- `Windows NT 4.0 Workstation`
+- `Visual Basic Standard 4.0`
+- `Visual SourceSafe 4.0`
 
 ## Usage
 
