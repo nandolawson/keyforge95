@@ -12,14 +12,12 @@ repository = "https://github.com/nandolawson/keyforge95"
 edition = "2021"
 
 [dependencies]
+getrandom = { version = "0.2.15", features = ["js"] }
 rand = "0.8.5"
+wasm-bindgen = "0.2.93"
 
-[profile.release]
-opt-level = "z"
-lto = true
-strip = true
-codegen-units = 1
-panic = "abort"
+[lib]
+crate-type = ["cdylib"]
 
 [lints.clippy]
 cargo = "deny"
@@ -30,3 +28,10 @@ perf = "deny"
 restriction = "allow"
 style = "deny"
 suspicious = "deny"
+
+[profile.release]
+opt-level = "z"
+lto = true
+strip = true
+codegen-units = 1
+panic = "abort"
