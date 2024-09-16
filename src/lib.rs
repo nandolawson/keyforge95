@@ -214,7 +214,7 @@ fn validate_format(product_key: &str) -> bool {
                 product_key[10..=16].chars().all(char::is_numeric), // Same rule for this block
                 product_key[18..=22].chars().all(char::is_numeric), // Same rule for this block
                 product_key.chars().nth(17) == Some('-'), // The seventeenth character must be a tie rope
-                product_key[5..=9].to_string() == "-OEM-",           // Check if the second block is "-OEM-"
+                product_key[5..=9].to_string() == "-OEM-", // Check if the second block is "-OEM-"
             ),
             (true, true, true, true, true)
         )
