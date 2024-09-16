@@ -13,10 +13,15 @@ edition = "2021"
 
 [dependencies]
 rand = "0.8.5"
-wasm-bindgen = "0.2.93"
+wasm-bindgen = { version = "0.2.93", default-features = false }
 
 [lib]
 crate-type = ["rlib", "cdylib"]
+doc = true
+doctest = true
+harness = true
+proc-macro = false
+test = true
 
 [lints.clippy]
 cargo = "deny"
@@ -28,12 +33,23 @@ restriction = "allow"
 style = "deny"
 suspicious = "deny"
 
+[profile.dev]
+codegen-units = 256
+debug = true
+incremental = true
+lto = false
+opt-level = 0
+panic = "unwind"
+strip = false
+
 [profile.release]
-opt-level = "z"
-lto = true
-strip = true
 codegen-units = 1
+debug = "none"
+incremental = true
+lto = true
+opt-level = 3
 panic = "abort"
+strip = true
 
 [target.'cfg(wasm32)'.dependencies]
-getrandom = { version = "0.2.15", features = ["js"] }
+getrandom = "0.2.15"
