@@ -2,7 +2,7 @@
 name = "keyforge95"
 description = "Library for product key generation / validation for Windows 95 and other Microsoft products"
 authors = ["Nando Lawson"]
-version = "2.1.0"
+version = "2.2.0"
 categories = ["algorithms", "development-tools"]
 keywords = ["windows", "product", "key", "generator", "validator"]
 readme = "README.md"
@@ -13,7 +13,6 @@ edition = "2021"
 
 [dependencies]
 rand = "0.8.5"
-wasm-bindgen = { version = "0.2.93", default-features = false }
 
 [lib]
 crate-type = ["rlib", "cdylib"]
@@ -53,3 +52,4 @@ strip = true
 
 [target.'cfg(wasm32)'.dependencies]
 getrandom = "0.2.15"
+wasm-bindgen = { version = "0.2.93", default-features = false }
