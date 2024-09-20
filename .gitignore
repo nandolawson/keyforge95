@@ -27,6 +27,8 @@
 *.user
 # Solution document states (Visual Studio)
 *.sln.docstates
+# Project IDX project files
+.idx/
 
 # Build artifacts
 # Generic build directory
