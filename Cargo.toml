@@ -23,8 +23,7 @@ test = true
 rand_core = { version = "0.6.4", features = ["getrandom"] }
 
 [target.'cfg(wasm32)'.dependencies]
-getrandom = "0.2.15"
-wasm-bindgen = { version = "0.2.93", default-features = false }
+getrandom = { version = "0.2.15", features = ["wasm-bindgen"] }
 
 [lints.clippy]
 cargo = "deny"
