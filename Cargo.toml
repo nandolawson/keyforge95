@@ -2,7 +2,7 @@
 name = "keyforge95"
 description = "Library for product key generation / validation for Windows 95 and other Microsoft products"
 authors = ["Nando Lawson"]
-version = "2.2.0"
+version = "2.3.0"
 categories = ["algorithms", "development-tools"]
 keywords = ["windows", "product", "key", "generator", "validator"]
 readme = "README.md"
@@ -12,7 +12,7 @@ repository = "https://github.com/nandolawson/keyforge95"
 edition = "2021"
 
 [dependencies]
-rand = "0.8.5"
+rand_core = { version = "0.6.4", features = ["getrandom"] }
 
 [lib]
 crate-type = ["rlib", "cdylib"]

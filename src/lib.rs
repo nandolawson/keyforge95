@@ -16,8 +16,7 @@ This file may not be copied, modified, or distributed except according to those 
 
 // Dependencies
 
-use core::ops::RangeInclusive;
-use rand::Rng;
+use rand_core::{RngCore, OsRng};
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::*;
 
@@ -52,7 +51,7 @@ pub fn generate_product_key(key_type: &str) -> String {
                 "{}-OEM-{}-{:05}",
                 generate_block('b'),
                 generate_block('d'),
-                rand::thread_rng().gen_range(0..=99999)
+                OsRng.next_u32() % 100_000
             )
         }
         _ => {
@@ -129,16 +128,16 @@ fn generate_block(choice: char) -> String {
     if choice == 'b' {
         format!(
             "{:03}{:02}",
-            rand::thread_rng().gen_range(0..=366),
-            rand::thread_rng().gen_range(4..=93)
+            OsRng.next_u32() % 367,
+            4 + (OsRng.next_u32() % 90)
         ) // Generate block c of the product key
     } else {
-        let range: RangeInclusive<u32> = if choice == 'a' {
-            0..=998 // Number range for block a
+        let max_value: u32 = if choice == 'a' {
+            998 // Number range for block a
         } else if choice == 'c' {
-            0..=8_888_888 // Number range for block c
+            8_888_888 // Number range for block c
         } else if choice == 'd' {
-            0..=9_999_999 // Number range for block d
+            9_999_999 // Number range for block d
         } else {
             panic!("Invalid choice: {choice}. Only 'a', 'b' 'c' and 'd' allowed.");
         };
@@ -152,7 +151,7 @@ fn generate_block(choice: char) -> String {
         // Generate a block and validate it
         loop {
             // Loop this operation if it fails
-            let block: String = format!("{:0length$}", rand::thread_rng().gen_range(range.clone())); // Generate a block of the product
+            let block: String = format!("{:0length$}", OsRng.next_u32() % (max_value + 1)); // Generate a block of the product
             if choice == 'd' {
                 if validate_block(format!("{}-", &block).as_str()) {
                     return block; // Exit the loop if the block validates successfully
