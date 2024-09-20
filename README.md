@@ -2,7 +2,7 @@
 
 ![downloads](https://img.shields.io/crates/d/keyforge95?style=flat&logo=rust&logoColor=ffffff&label=downloads&color=ffc933) ![version](https://img.shields.io/crates/v/keyforge95?style=flat?&logo=rust&logoColor=fffffflabel=version&color=ffc933) ![build status](https://img.shields.io/github/actions/workflow/status/nandolawson/keyforge95/test.yml?style=flat&logo=githubactions&logoColor=ffffff&label=build)
 
-This library is a cross-platform generator and validator for Windows 95 keys written in Rust. As it turned out, however, it supposedly works for all Microsoft products that require a 10-digit product key in the following format: _`XXX-XXXXXXX`_. In addition to these retail keys, OEM keys (_`XXXXX-OEM-XXXXXXX-XXXXX`) can also be generated.
+This library is a cross-platform generator and validator for Windows 95 keys written in Rust. As it turned out, however, it supposedly works for all Microsoft products that require a 10-digit product key in the following format: _`XXX-XXXXXXX`_. In addition to these retail keys, OEM keys (_`XXXXX-OEM-XXXXXXX-XXXXX`_) can also be generated.
 
 It is only sporadically developed as it is solely a learning project for me and does not have particularly significant practical use.
 
