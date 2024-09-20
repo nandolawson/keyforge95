@@ -18,6 +18,7 @@ This file may not be copied, modified, or distributed except according to those 
 
 use core::ops::RangeInclusive;
 use rand::Rng;
+#[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::*;
 
 //Public Functions
@@ -39,7 +40,7 @@ use wasm_bindgen::prelude::*;
 /// Will panic if no argument or any argument other than "retail" or "oem" is used.
 
 #[must_use]
-#[wasm_bindgen]
+#[cfg_attr(target_arch = "wasm32", wasm_bindgen)]
 pub fn generate_product_key(key_type: &str) -> String {
     // Use generate_block() for product key generation and print it with the right format
     match key_type {
@@ -91,7 +92,7 @@ pub fn generate_product_key(key_type: &str) -> String {
 /// }
 /// ```
 #[must_use]
-#[wasm_bindgen]
+#[cfg_attr(target_arch = "wasm32", wasm_bindgen)]
 pub fn validate_product_key(product_key: &str) -> bool {
     if validate_format(product_key) {
         // Check if the product key format is valid
