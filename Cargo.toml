@@ -11,9 +11,6 @@ exclude = ["target/", ".github/", ".gitignore"]
 repository = "https://github.com/nandolawson/keyforge95"
 edition = "2021"
 
-[dependencies]
-rand_core = { version = "0.6.4", features = ["getrandom"] }
-
 [lib]
 crate-type = ["rlib", "cdylib"]
 doc = true
@@ -21,6 +18,13 @@ doctest = true
 harness = true
 proc-macro = false
 test = true
+
+[dependencies]
+rand_core = { version = "0.6.4", features = ["getrandom"] }
+
+[target.'cfg(wasm32)'.dependencies]
+getrandom = "0.2.15"
+wasm-bindgen = { version = "0.2.93", default-features = false }
 
 [lints.clippy]
 cargo = "deny"
@@ -62,6 +66,3 @@ opt-level = 3
 panic = "abort"
 strip = true
 
-[target.'cfg(wasm32)'.dependencies]
-getrandom = "0.2.15"
-wasm-bindgen = { version = "0.2.93", default-features = false }
