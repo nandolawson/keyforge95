@@ -16,7 +16,7 @@ This file may not be copied, modified, or distributed except according to those 
 
 // Dependencies
 
-use rand_core::{RngCore, OsRng};
+use rand_core::{OsRng, RngCore};
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::*;
 
