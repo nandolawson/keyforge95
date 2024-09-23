@@ -17,6 +17,8 @@ This file may not be copied, modified, or distributed except according to those 
 // Dependencies
 
 use rand_core::{OsRng, RngCore};
+#[cfg(target_arch = "wasm32")]
+use wasm_bindgen::prelude::*;
 
 //Public Functions
 
@@ -35,7 +37,6 @@ use rand_core::{OsRng, RngCore};
 /// # Panics
 ///
 /// Will panic if no argument or any argument other than "retail" or "oem" is used.
-
 #[must_use]
 #[cfg_attr(target_arch = "wasm32", wasm_bindgen)]
 pub fn generate_product_key(key_type: &str) -> String {
