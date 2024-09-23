@@ -37,7 +37,10 @@ jobs:
         with:
           node-version: '20'
       - name: Publish package
-        run: cd pkg && npm set "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" && npm publish --access public
+        run: |
+              cd pkg
+              npm set "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}"
+              npm publish --access public
   publish-gh-packages:
     name: Publish to GitHub Packages
     runs-on: ubuntu-latest
@@ -59,6 +62,10 @@ jobs:
         with:
           node-version: 20
           registry-url: https://npm.pkg.github.com/
-      - run: cd pkg && npm publish --access public
+      - run: |
+              cd pkg
+              npm install --package-lock-only
+              npm ci
+              npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
