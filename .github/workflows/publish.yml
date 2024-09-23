@@ -17,7 +17,7 @@ jobs:
       - name: Publish crate
         run: cargo publish --token ${{ secrets.CRATES_TOKEN }}
   publish-npm:
-    name: Publish to npm
+    name: Publish to GitHub Packages & npm
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources
@@ -37,4 +37,8 @@ jobs:
         with:
           node-version: '20'
       - name: Publish package
-        run: cd pkg && npm set "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" && npm publish --access public
+        run: |
+              cd pkg
+              npm set "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" && npm publish --access public
+              npm set "//npm.pkg.github.com/:_authToken=${{secrets.GITHUB_TOKEN}}" && npm publish --access public
+              
