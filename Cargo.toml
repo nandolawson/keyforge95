@@ -2,7 +2,7 @@
 name = "keyforge95"
 description = "Library for product key generation / validation for Windows 95 and other Microsoft products"
 authors = ["Nando Lawson"]
-version = "2.3.0"
+version = "2.3.1"
 categories = ["algorithms", "development-tools"]
 keywords = ["windows", "product", "key", "generator", "validator"]
 readme = "README.md"
