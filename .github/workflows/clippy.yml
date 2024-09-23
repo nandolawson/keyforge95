@@ -4,16 +4,19 @@ on:
   push:
     branches: [ "main" ]
     paths-ignore:
-      - 'LICENSE'
+      - 'Dockerfile'
+      - '.dockerignore'
       - '.github/**'
       - '.gitignore'
+      - 'LICENSE'
   pull_request:
     branches: [ "main" ]
     paths-ignore:
-      - 'README.md'
-      - 'LICENSE'
+      - 'Dockerfile'
+      - '.dockerignore'
       - '.github/**'
       - '.gitignore'
+      - 'LICENSE'
   schedule:
     - cron: '0 0 * * *'
 jobs:
