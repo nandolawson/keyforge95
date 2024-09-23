@@ -6,7 +6,7 @@ This library is a cross-platform generator and validator for Windows 95 keys wri
 
 It is only sporadically developed as it is solely a learning project for me and does not have particularly significant practical use.
 
-⚠️ **Note**: keyforge95 and I are in no way associated with Microsoft or their products. Only [publicly available information](https://en.wikipedia.org/wiki/Product_key#Examples) from the internet has been used to create this project. It neither bypasses effective copy measures nor constitutes a "crack." The purpose of this repository, from my perspective, is solely to gain experience in programming and enhance my skills and knowledge.
+> ⚠️ **Note**: keyforge95 and I are in no way associated with Microsoft or their products. Only [publicly available information](https://en.wikipedia.org/wiki/Product_key#Examples) from the internet has been used to create this project. It neither bypasses effective copy measures nor constitutes a "crack." The purpose of this repository, from my perspective, is solely to gain experience in programming and enhance my skills and knowledge.
 
 ## Compatible Software
 
@@ -26,6 +26,8 @@ It is only sporadically developed as it is solely a learning project for me and 
 - `Visual SourceSafe 4.0`
 
 ## Usage
+
+> The following information is written for Rust. However, all information should be easily applicable to JavaScript / TypeScript, as this project is a very simple library.
 
 This library only has two public functions: _`generate_product_key()`_ and _`validate_product_key()`_
 
