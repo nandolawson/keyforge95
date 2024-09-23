@@ -37,6 +37,4 @@ jobs:
         with:
           node-version: '20'
       - name: Publish package
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: cd pkg && npm publish --access public
+        run: cd pkg && npm set "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" && npm publish --access public
