@@ -1,9 +1,9 @@
 on:
   workflow_dispatch:
-name: Publish to crates.io
+name: Publish to several registries
 jobs:
-  publish:
-    name: Publish
+  publish-crates-io:
+    name: Publish to crates.io
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources
@@ -16,3 +16,27 @@ jobs:
           override: true
       - name: Publish crate
         run: cargo publish --token ${{ secrets.CRATES_TOKEN }}
+  publish-npm:
+    name: Publish to npm
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+      - name: Install wasm-pack
+        run: rustup target add wasm32-unknown-unknown && cargo install wasm-pack
+      - name: Build with wasm-pack
+        run: wasm-pack build --release --target nodejs
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+      - name: Publish package
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: cd pkg && npm publish --access public
