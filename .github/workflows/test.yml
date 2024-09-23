@@ -2,10 +2,12 @@ name: Test
 on:
   push:
     paths-ignore:
-      - 'README.md'
-      - 'LICENSE'
+      - 'Dockerfile'
+      - '.dockerignore'
       - '.github/**'
       - '.gitignore'
+      - 'LICENSE'
+      - 'README.md'
     branches: [ "main" ]
   pull_request:
     paths-ignore:
