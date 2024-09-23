@@ -54,6 +54,12 @@ match validate_product_key(product_key) {
 }
 ```
 
+## Compiling
+### For Rust
+No extra steps necessary. Just run _`cargo build`_.
+### For WebAssembly
+Install wasm32 as a target in rustup: _`rustup target add wasm32-unknown-unknown`_ and compile the project: _`cargo build --target wasm32-unknown-unknown`_. It is recommended, but not necessary, to compile the project via wasm-pack instead. To do this, simply run _`cargo install wasm-pack`_ and then _`wasm-pack build --target nodejs`_ after installing the target mentioned above. The finished build will then end up in the pkg folder in the project root.
+
 ## Contributing
 
 Anyone who wants to contribute is more than welcome to do so. I would be delighted to learn from the contributions of other users. If you find a bug or have a feature in mind that you think would be useful, please feel free to create a pull request on GitHub.
