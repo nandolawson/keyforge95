@@ -33,7 +33,7 @@ jobs:
       - name: Build with wasm-pack
         run: wasm-pack build --release --target nodejs
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
       - name: Publish package
@@ -54,9 +54,11 @@ jobs:
         run: rustup target add wasm32-unknown-unknown && cargo install wasm-pack
       - name: Build with wasm-pack
         run: wasm-pack build --release --target nodejs
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - name: Set up node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '20'
-      - name: Publish package
-        run: cd pkg && npm set "//npm.pkg.github.com/:_authToken=${{secrets.GITHUB_TOKEN}}" && npm publish --access public
+          node-version: 20
+          registry-url: https://npm.pkg.github.com/
+      - run: cd pkg && npm ci && npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
