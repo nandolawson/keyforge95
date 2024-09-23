@@ -17,7 +17,7 @@ jobs:
       - name: Publish crate
         run: cargo publish --token ${{ secrets.CRATES_TOKEN }}
   publish-npm:
-    name: Publish to GitHub Packages & npm
+    name: Publish to npm
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources
@@ -37,8 +37,26 @@ jobs:
         with:
           node-version: '20'
       - name: Publish package
-        run: |
-              cd pkg
-              npm set "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" && npm publish --access public
-              npm set "//npm.pkg.github.com/:_authToken=${{secrets.GITHUB_TOKEN}}" && npm publish --access public
-              
+        run: cd pkg && npm set "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" && npm publish --access public
+  publish-gh-packages:
+    name: Publish to GitHub Packages
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+      - name: Install wasm-pack
+        run: rustup target add wasm32-unknown-unknown && cargo install wasm-pack
+      - name: Build with wasm-pack
+        run: wasm-pack build --release --target nodejs
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+      - name: Publish package
+        run: cd pkg && npm set "//npm.pkg.github.com/:_authToken=${{secrets.GITHUB_TOKEN}}" && npm publish --access public
