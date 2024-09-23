@@ -152,11 +152,11 @@ fn generate_block(choice: char) -> String {
             // Loop this operation if it fails
             let block: String = format!("{:0length$}", OsRng.next_u32() % (max_value + 1)); // Generate a block of the product
             if choice == 'd' {
-                if validate_block(format!("{}-", &block).as_str()) {
-                    return block; // Exit the loop if the block validates successfully
+                if validate_block(&format!("{block}-")) {
+                    return block // Exit the loop if the block validates successfully
                 }
             } else if validate_block(&block) {
-                return block; // Exit the loop if the block validates successfully
+                return block // Exit the loop if the block validates successfully
             }
         }
     }
@@ -216,7 +216,7 @@ fn validate_format(product_key: &str) -> bool {
                 product_key[10..=16].chars().all(char::is_numeric), // Same rule for this block
                 product_key[18..=22].chars().all(char::is_numeric), // Same rule for this block
                 product_key.chars().nth(17) == Some('-'), // The seventeenth character must be a tie rope
-                product_key[5..=9].to_string() == "-OEM-", // Check if the second block is "-OEM-"
+                product_key[5..=9] == *"-OEM-", // Check if the second block is "-OEM-"
             ),
             (true, true, true, true, true)
         )
