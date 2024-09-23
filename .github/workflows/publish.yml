@@ -41,31 +41,31 @@ jobs:
               cd pkg
               npm set "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}"
               npm publish --access public
-  publish-gh-packages:
-    name: Publish to GitHub Packages
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout sources
-        uses: actions/checkout@v2
-      - name: Install stable toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
-      - name: Install wasm-pack
-        run: rustup target add wasm32-unknown-unknown && cargo install wasm-pack
-      - name: Build with wasm-pack
-        run: wasm-pack build --release --target nodejs
-      - name: Set up node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          registry-url: https://npm.pkg.github.com/
-      - run: |
-              cd pkg
-              npm install --package-lock-only
-              npm ci
-              npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+#  publish-gh-packages:
+#    name: Publish to GitHub Packages
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout sources
+#        uses: actions/checkout@v2
+#      - name: Install stable toolchain
+#        uses: actions-rs/toolchain@v1
+#        with:
+#          profile: minimal
+#          toolchain: stable
+#          override: true
+#      - name: Install wasm-pack
+#        run: rustup target add wasm32-unknown-unknown && cargo install wasm-pack
+#      - name: Build with wasm-pack
+#        run: wasm-pack build --release --target nodejs
+#      - name: Set up node.js
+#        uses: actions/setup-node@v4
+#        with:
+#          node-version: 20
+#          registry-url: https://npm.pkg.github.com/
+#      - run: |
+#              cd pkg
+#              npm install --package-lock-only
+#              npm ci
+#              npm publish --access public
+#        env:
+#          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
