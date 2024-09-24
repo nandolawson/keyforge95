@@ -7,7 +7,8 @@ categories = ["algorithms", "development-tools"]
 keywords = ["windows", "product", "key", "generator", "validator"]
 readme = "README.md"
 license = "GPL-3.0"
-exclude = ["target/", ".github/", ".gitignore"]
+license-file = "LICENSE"
+exclude = ["target/", "pkg/", ".dockerignore", ".github/", ".gitignore", "Dockerfile"]
 repository = "https://github.com/nandolawson/keyforge95"
 edition = "2021"
 
