@@ -69,7 +69,5 @@ jobs:
               
       - run: |
               cd pkg
-              npm set "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}"
+              npm set "//registry.npmjs.org/:_authToken=${{ secrets.GITHUB_TOKEN }}"
               npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
