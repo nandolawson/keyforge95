@@ -66,6 +66,10 @@ jobs:
               cd pkg
               npm install --package-lock-only
               npm ci
-      - run: cd pkg && npm publish --access public
+              
+      - run: |
+              cd pkg
+              npm set "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}"
+              npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
