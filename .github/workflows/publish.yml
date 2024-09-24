@@ -64,10 +64,9 @@ jobs:
           registry-url: https://npm.pkg.github.com/
       - run: |
               cd pkg
+              echo "@nandolawson:registry=https://npm.pkg.github.com" > .npmrc
               npm install --package-lock-only
               npm ci
-              
-      - run: |
-              cd pkg
-              npm set "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}"
-              npm publish --access public
+              npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
