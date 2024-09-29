@@ -16,8 +16,9 @@ This file may not be copied, modified, or distributed except according to those 
 
 mod generation;
 mod validation;
+mod frontend_web;
 
-pub use {generation::generate_product_key, validation::validate_product_key};
+pub use {generation::generate_product_key, validation::validate_product_key, frontend_web::run_app};
 
 #[cfg(test)]
 mod tests {

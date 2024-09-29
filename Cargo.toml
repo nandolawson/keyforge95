@@ -22,6 +22,9 @@ test = true
 
 [dependencies]
 rand_core = { version = "0.6.4", features = ["getrandom"] }
+yew = { version = "0.20.0", features = ["csr"] }#, features = ["csr"]}
+wasm-bindgen = "0.2.93"
+web-sys = { version="0.3.70", features = ["HtmlSelectElement"] }
 
 [target.wasm32-unknown-unknown.dependencies]
 getrandom = { version = "0.2.15", features = ["js"] }
