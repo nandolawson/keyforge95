@@ -7,7 +7,7 @@ categories = ["algorithms", "development-tools"]
 keywords = ["windows", "product", "key", "generator", "validator"]
 readme = "README.md"
 license = "GPL-3.0"
-exclude = ["target/", "pkg/", ".dockerignore", ".github/", ".gitignore", "Dockerfile"]
+exclude = [".dockerignore", ".github/", "pkg/", "target/", ".gitignore", "Dockerfile"]
 repository = "https://github.com/nandolawson/keyforge95"
 edition = "2021"
 
@@ -32,7 +32,6 @@ complexity = "deny"
 correctness = "deny"
 pedantic = "deny"
 perf = "deny"
-restriction = "allow"
 style = "deny"
 suspicious = "deny"
 
@@ -65,4 +64,3 @@ lto = true
 opt-level = 3
 panic = "abort"
 strip = true
-

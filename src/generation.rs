@@ -6,57 +6,48 @@ Licensed under the GPL, Version 3 <https://github.com/nandolawson/keyforge95/blo
 This file may not be copied, modified, or distributed except according to those terms.
 */
 
+use crate::{
+    Choice::{A, B, C, D, E},
+    KeyType::{Retail, OEM},
+};
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::*;
-
-pub enum Choice {
-    A,
-    B,
-    C,
-    D,
-    E,
-}
-
-use Choice::{A, B, C, D, E};
 
 /// Generates a valid product key
 ///
 /// # Example
 ///
 /// ```
-/// use keyforge95::generate_product_key;
+/// use keyforge95::prelude::*;
 /// for _ in 0..10 {
-///     let product_key: String = generate_product_key("retail"); // Both, "retail" and "oem" are available
+///     let product_key: String = generate_product_key(Retail); // Both, "Retail" and "OEM" are available
 ///     assert_eq!(product_key.len(), 11);
 ///     assert_eq!(product_key.chars().nth(3).unwrap(), '-');
 /// }
 /// ```
-/// # Panics
-///
-/// Will panic if no argument or any argument other than "retail" or "oem" is used.
 #[must_use]
+#[allow(clippy::needless_pass_by_value)]
 #[cfg_attr(target_arch = "wasm32", wasm_bindgen)]
-pub fn generate_product_key(key_type: &str) -> String {
+pub fn generate_product_key(key_type: crate::KeyType) -> String {
     // Use generate_block() for product key generation and print it with the right format
     match key_type {
-        "retail" => {
-            format!("{}-{}", generate_block(&A), generate_block(&C))
+        Retail => {
+            format!("{}-{}", generate_block(A), generate_block(C))
         }
-        "oem" => {
+        OEM => {
             format!(
                 "{}-OEM-{}-{}",
-                generate_block(&B),
-                generate_block(&D),
-                generate_block(&E)
+                generate_block(B),
+                generate_block(D),
+                generate_block(E)
             )
         }
-        _ => panic!("Invalid choice: {key_type}. Only 'retail' or 'oem' allowed."),
     }
 }
 
-pub(crate) fn generate_block(choice: &Choice) -> String {
+#[allow(clippy::needless_pass_by_value)]
+pub(crate) fn generate_block(choice: crate::Choice) -> String {
     use rand_core::{OsRng, RngCore};
-
     // Determine which block of the product key will be generated
     match choice {
         B => format!(

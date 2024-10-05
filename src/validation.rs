@@ -13,7 +13,7 @@ use wasm_bindgen::prelude::*;
 ///
 /// # Examples
 /// ```
-/// use keyforge95::validate_product_key;
+/// use keyforge95::prelude::*;
 /// let test_cases: [&str; 5] = [ // This keys should be valid
 ///     "111-1111111",
 ///     "000-0000000",
@@ -27,7 +27,7 @@ use wasm_bindgen::prelude::*;
 /// ```
 ///
 /// ```
-/// use keyforge95::validate_product_key;
+/// use keyforge95::prelude::*;
 /// let test_cases: [&str; 5] = [ // This keys should be invalid
 ///     "111-1111112",
 ///     "ABC-DEF-GHI",

@@ -33,11 +33,11 @@ This library only has two public functions: _`generate_product_key()`_ and _`val
 
 ### Generate
 
-After adding keyforge95 to your project, just use _`generate_product_key("retail" / "oem")`_ to generate a valid product key as a String.
+After adding keyforge95 to your project, just use _`generate_product_key(Retail / OEM)`_ to generate a valid product key as a String.
 
 ```rs
-use keyforge95::generate_product_key;
-let product_key: String = generate_product_key("oem");
+use keyforge95::prelude::*;
+let product_key: String = generate_product_key(OEM);
 println("Generated product key: {}", product_key);
 ```
 
@@ -46,7 +46,7 @@ println("Generated product key: {}", product_key);
 To check the validity of a key, add keyforge95 to your project and use _`validate_product_key("key")`_. This function returns a bool. It is important that the right formatting (_`XXX-XXXXXXX`_) is used for the product key. Otherwise, the validation will fail.
 
 ```rs
-use keyforge95::validate_product_key;
+use keyforge95::prelude::*;
 let product_key: &str = "000-0000000"
 match validate_product_key(product_key) {
     true => println!("Valid key: {}", product_key),
@@ -55,9 +55,13 @@ match validate_product_key(product_key) {
 ```
 
 ## Compiling
+
 ### For Rust
+
 No extra steps necessary. Just run _`cargo build`_.
+
 ### For WebAssembly
+
 Install wasm32 as a target in rustup: _`rustup target add wasm32-unknown-unknown`_ and compile the project: _`cargo build --target wasm32-unknown-unknown`_. It is recommended, but not necessary, to compile the project via wasm-pack instead. To do this, simply run _`cargo install wasm-pack`_ and then _`wasm-pack build --target nodejs`_ after installing the target mentioned above. The finished build will then end up in the pkg folder in the project root.
 
 ## Contributing
