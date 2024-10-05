@@ -2,9 +2,9 @@
 name = "keyforge95"
 description = "Library for product key generation / validation for Windows 95 and other Microsoft products"
 authors = ["Nando Lawson"]
-version = "2.4.0"
+version = "3.0.0"
 categories = ["algorithms", "development-tools"]
-keywords = ["windows", "product", "key", "generator", "validator"]
+keywords = ["generator", "key", "no_std", "product", "product_key", "validator", "wasm", "webassembly", "windows"]
 readme = "README.md"
 license = "GPL-3.0"
 exclude = [".dockerignore", ".github/", "pkg/", "target/", ".gitignore", "Dockerfile"]
