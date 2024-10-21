@@ -2,7 +2,7 @@
 
 ![version](https://img.shields.io/crates/v/keyforge95?style=flat?label=version&color=ffffff&label=version) ![downloads on crates.io](https://img.shields.io/crates/d/keyforge95?style=flat&logo=rust&logoColor=ffffff&label=downloads&color=ffc933) ![downloads on npm](https://img.shields.io/npm/d18m/keyforge95?logo=npm&logoColor=ffffff&label=downloads&color=cc3534) ![build status](https://img.shields.io/github/actions/workflow/status/nandolawson/keyforge95/test.yml?style=flat&logo=githubactions&logoColor=ffffff&label=build)
 
-This library is a cross-platform generator and validator for Windows 95 keys written in Rust. As it turned out, however, it supposedly works for all Microsoft products that require a 10-digit product key in the following format: _`XXX-XXXXXXX`_. In addition to these retail keys, OEM keys (_`XXXXX-OEM-XXXXXXX-XXXXX`_) can also be generated. Keyforge95 can not only be easily added to any Rust project via Cargo, but can also be compiled into WebAssembly for JavaScript/TypeScript using wasm-pack or obtained via npm.
+This library is a cross-platform generator and validator for Windows 95 keys written in Rust. As it turned out, however, it supposedly works for all Microsoft products that require a 10-digit product key in the following format: _`XXX-XXXXXXX`_. In addition to these, Windows 95 OEM keys (_`XXXXX-OEM-XXXXXXX-XXXXX`_) can also be generated and validated. Keyforge95 can not only be easily added to any Rust project via Cargo, but can also be compiled into WebAssembly for JavaScript/TypeScript using wasm-pack or obtained via npm.
 
 It is only sporadically developed as it is solely a learning project for me and does not have particularly significant practical use.
 
@@ -56,11 +56,11 @@ match validate_product_key(product_key) {
 
 ## Compiling
 
-### For Rust
+### Rust
 
 No extra steps necessary. Just run _`cargo build`_.
 
-### For WebAssembly
+### WebAssembly
 
 Install wasm32 as a target in rustup: _`rustup target add wasm32-unknown-unknown`_ and compile the project: _`cargo build --target wasm32-unknown-unknown`_. It is recommended, but not necessary, to compile the project via wasm-pack instead. To do this, simply run _`cargo install wasm-pack`_ and then _`wasm-pack build --target nodejs`_ after installing the target mentioned above. The finished build will then end up in the pkg folder in the project root.
 
