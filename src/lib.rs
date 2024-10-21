@@ -15,8 +15,9 @@ This file may not be copied, modified, or distributed except according to those 
 #![doc = include_str!("../README.md")] // Adding the README to the documentation
 
 #[cfg(target_arch = "wasm32")]
-use wasm_bindgen::prelude::*;
+use wasm_bindgen::prelude::wasm_bindgen;
 
+#[derive(Clone, Copy, Debug)]
 enum Choice {
     A,
     B,
@@ -26,6 +27,7 @@ enum Choice {
 }
 
 #[cfg_attr(target_arch = "wasm32", wasm_bindgen)]
+#[derive(Clone, Copy, Debug)]
 pub enum KeyType {
     OEM,
     Retail,

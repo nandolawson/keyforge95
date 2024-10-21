@@ -11,7 +11,7 @@ use crate::{
     KeyType::{Retail, OEM},
 };
 #[cfg(target_arch = "wasm32")]
-use wasm_bindgen::prelude::*;
+use wasm_bindgen::prelude::wasm_bindgen;
 
 /// Generates a valid product key
 ///
@@ -26,7 +26,6 @@ use wasm_bindgen::prelude::*;
 /// }
 /// ```
 #[must_use]
-#[allow(clippy::needless_pass_by_value)]
 #[cfg_attr(target_arch = "wasm32", wasm_bindgen)]
 pub fn generate_product_key(key_type: crate::KeyType) -> String {
     // Use generate_block() for product key generation and print it with the right format
@@ -45,7 +44,6 @@ pub fn generate_product_key(key_type: crate::KeyType) -> String {
     }
 }
 
-#[allow(clippy::needless_pass_by_value)]
 pub(crate) fn generate_block(choice: crate::Choice) -> String {
     use rand_core::{OsRng, RngCore};
     // Determine which block of the product key will be generated
@@ -73,9 +71,11 @@ pub(crate) fn generate_block(choice: crate::Choice) -> String {
                 use crate::validation::validate_block;
                 // Loop this operation if it fails
                 let block: String = format!("{:0length$}", OsRng.next_u32() % (max_value + 1)); // Generate a block of the product
-                if validate_block(&block)
-                    || (matches!(choice, D) && validate_block(&format!("{block}-")))
-                {
+                if validate_block(&format!(
+                    "{}{}",
+                    block,
+                    if matches!(choice, D) { "-" } else { "" }
+                )) {
                     return block;
                 }
             }
