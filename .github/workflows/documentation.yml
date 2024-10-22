@@ -5,6 +5,7 @@ on:
       - 'Cargo.toml'
       - 'Dockerfile'
       - '.dockerignore'
+      - '.devcontainer/**'
       - '.github/**'
       - '.gitignore'
     branches: [main]
