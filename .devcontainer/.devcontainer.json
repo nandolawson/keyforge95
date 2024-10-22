@@ -1,0 +1,5 @@
+{
+	"name": "Rust",
+	"image": "rust:slim",
+	"postCreateCommand": "rustup target add wasm32-unknown-unknown && rustup component add clippy && cargo install wasm-pack && cargo generate-lockfile"
+}
