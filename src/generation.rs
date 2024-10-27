@@ -46,14 +46,15 @@ pub fn generate_product_key(key_type: crate::KeyType) -> String {
 
 pub(crate) fn generate_block(choice: crate::Choice) -> String {
     use rand_core::{OsRng, RngCore};
+    let rng = || OsRng.next_u32();
     // Determine which block of the product key will be generated
     match choice {
         B => format!(
             "{:03}{:02}",
-            OsRng.next_u32() % 367,
-            4 + (OsRng.next_u32() % 90)
+            rng() % 367,
+            4 + (rng() % 90)
         ),
-        E => format!("{:05}", OsRng.next_u32() % 100_000),
+        E => format!("{:05}", rng() % 100_000),
         _ => {
             let max_value: u32 = match choice {
                 A => 998,       // Number range for block A
@@ -70,7 +71,7 @@ pub(crate) fn generate_block(choice: crate::Choice) -> String {
             loop {
                 use crate::validation::validate_block;
                 // Loop this operation if it fails
-                let block: String = format!("{:0length$}", OsRng.next_u32() % (max_value + 1)); // Generate a block of the product
+                let block: String = format!("{:0length$}", rng() % (max_value + 1)); // Generate a block of the product
                 if validate_block(&format!(
                     "{}{}",
                     block,
