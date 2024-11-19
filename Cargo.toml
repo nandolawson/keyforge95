@@ -1,15 +1,15 @@
 [package]
-name = "keyforge95"
-description = "Library for product key generation / validation for Windows 95 and other Microsoft products"
 authors = ["Nando Lawson"]
-version = "3.1.0"
 categories = ["algorithms", "development-tools"]
-keywords = ["generator", "no_std", "product_key", "validator", "wasm"]
-readme = "README.md"
-license = "GPL-3.0"
-exclude = [".dockerignore", ".github/", "pkg/", "target/", ".gitignore", "Dockerfile"]
-repository = "https://github.com/nandolawson/keyforge95"
+description = "Library for product key generation / validation for Windows 95 and other Microsoft products"
 edition = "2021"
+exclude = [".dockerignore", ".github/", "pkg/", "target/", ".gitignore", "Dockerfile"]
+keywords = ["generator", "no_std", "product_key", "validator", "wasm"]
+license = "GPL-3.0"
+name = "keyforge95"
+readme = "README.md"
+repository = "https://github.com/nandolawson/keyforge95"
+version = "3.1.0"
 
 [lib]
 crate-type = ["rlib", "cdylib"]
@@ -59,8 +59,8 @@ strip = false
 [profile.release]
 codegen-units = 1
 debug = "none"
-incremental = true
-lto = true
+incremental = false
+lto = "fat"
 opt-level = 3
 panic = "abort"
 strip = true

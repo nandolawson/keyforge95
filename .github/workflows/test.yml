@@ -4,7 +4,7 @@ on:
     paths-ignore:
       - 'Dockerfile'
       - '.dockerignore'
-      - '.devcontainer/**'
+      - '.devcontainer.json'
       - '.github/**'
       - '.gitignore'
       - 'LICENSE'
@@ -13,7 +13,7 @@ on:
     paths-ignore:
       - 'README.md'
       - 'LICENSE'
-      - '.devcontainer/**'
+      - '.devcontainer.json'
       - '.github/**'
       - '.gitignore'
     branches: [ "main" ]

@@ -6,7 +6,7 @@ on:
     paths-ignore:
       - 'Dockerfile'
       - '.dockerignore'
-      - '.devcontainer/**'
+      - '.devcontainer.json'
       - '.github/**'
       - '.gitignore'
       - 'LICENSE'
@@ -15,7 +15,7 @@ on:
     paths-ignore:
       - 'Dockerfile'
       - '.dockerignore'
-      - '.devcontainer/**'
+      - '.devcontainer.jsons'
       - '.github/**'
       - '.gitignore'
       - 'LICENSE'
