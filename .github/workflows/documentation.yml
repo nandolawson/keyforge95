@@ -6,6 +6,7 @@ on:
       - '.devcontainer/**'
       - '.github/**'
       - '.gitignore'
+      - 'CONTRIBUTING.md'
     branches: [main]
 permissions:
   contents: read
