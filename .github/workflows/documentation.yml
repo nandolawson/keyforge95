@@ -3,9 +3,7 @@ on:
   push:
     paths-ignore:
       - 'Cargo.toml'
-      - 'Dockerfile'
-      - '.dockerignore'
-      - '.devcontainer.json'
+      - '.devcontainer/'
       - '.github/**'
       - '.gitignore'
     branches: [main]

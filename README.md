@@ -4,6 +4,7 @@
 [![downloads on crates.io](https://img.shields.io/crates/d/keyforge95?style=flat&logo=rust&logoColor=ffffff&label=downloads&color=ffc933)](https://crates.io/crates/keyforge95)
 [![downloads on npm](https://img.shields.io/npm/d18m/keyforge95?logo=npm&logoColor=ffffff&label=downloads&color=cc3534)](https://www.npmjs.com/package/keyforge95)
 [![build status](https://img.shields.io/github/actions/workflow/status/nandolawson/keyforge95/test.yml?style=flat&logo=githubactions&logoColor=ffffff&label=build)](https://github.com/nandolawson/keyforge95/actions/workflows/test.yml)
+[![Open in Dev Container](https://img.shields.io/badge/Open%20in%20Dev%20Container-blue?style=flat&logo=docker&logoColor=%23fff)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/nandolawson/keyforge95)
 
 This library is a cross-platform generator and validator for Windows 95 keys written in Rust. As it turned out, however, it supposedly works for all Microsoft products that require a 10-digit product key in the following format: _`XXX-XXXXXXX`_. In addition to these, Windows 95 OEM keys (_`XXXXX-OEM-XXXXXXX-XXXXX`_) can also be generated and validated. Keyforge95 can not only be easily added to any Rust project via Cargo, but can also be compiled into WebAssembly for JavaScript/TypeScript using wasm-pack or obtained via npm.
 

@@ -2,9 +2,7 @@ name: Test
 on:
   push:
     paths-ignore:
-      - 'Dockerfile'
-      - '.dockerignore'
-      - '.devcontainer.json'
+      - '.devcontainer/'
       - '.github/**'
       - '.gitignore'
       - 'LICENSE'
@@ -13,7 +11,7 @@ on:
     paths-ignore:
       - 'README.md'
       - 'LICENSE'
-      - '.devcontainer.json'
+      - '.devcontainer/'
       - '.github/**'
       - '.gitignore'
     branches: [ "main" ]

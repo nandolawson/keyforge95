@@ -3,7 +3,14 @@ authors = ["Nando Lawson"]
 categories = ["algorithms", "development-tools"]
 description = "Library for product key generation / validation for Windows 95 and other Microsoft products"
 edition = "2021"
-exclude = [".dockerignore", ".github/", "pkg/", "target/", ".gitignore", "Dockerfile"]
+exclude = [
+    ".devcontainer/",
+    ".github/",
+    "pkg/",
+    "target/",
+    ".gitignore",
+    "Dockerfile",
+]
 keywords = ["generator", "no_std", "product_key", "validator", "wasm"]
 license = "GPL-3.0"
 name = "keyforge95"
