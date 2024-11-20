@@ -8,8 +8,7 @@
 				"github.vscode-github-actions",
 				"ms-azuretools.vscode-docker",
 				"rust-lang.rust-analyzer",
-				"tamasfe.even-better-toml",
-				"timonwong.shellcheck"
+				"tamasfe.even-better-toml"
 			],
 			"features": {
 				"ghcr.io/devcontainers/features/docker-in-docker:latest": {},
