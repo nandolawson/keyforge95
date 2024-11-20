@@ -30,6 +30,7 @@
 			}
 		}
 	},
-	"dockerFile": "rust:slim",
+	"dockerFile": "Dockerfile",
+	"postCreateCommand": "cargo generate-lockfile",
 	"postStartCommand": "rustup update"
 }
