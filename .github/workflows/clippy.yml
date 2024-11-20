@@ -4,14 +4,14 @@ on:
   push:
     branches: [ "main" ]
     paths-ignore:
-      - '.devcontainer/'
+      - '.devcontainer/**'
       - '.github/**'
       - '.gitignore'
       - 'LICENSE'
   pull_request:
     branches: [ "main" ]
     paths-ignore:
-      - '.devcontainer/'
+      - '.devcontainer/**'
       - '.github/**'
       - '.gitignore'
       - 'LICENSE'
