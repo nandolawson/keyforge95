@@ -9,6 +9,7 @@ exclude = [
     "pkg/",
     "target/",
     ".gitignore",
+    "CONTRIBUTING.md",
     "Dockerfile",
 ]
 keywords = ["generator", "no_std", "product_key", "validator", "wasm"]

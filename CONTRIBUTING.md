@@ -1,4 +1,4 @@
-# Contributing to LinkLoom
+# Contributing to keyforge95
 
 Thank you for your interest in contributing to this project! All kinds of contributions are welcome, whether it's in the form of code, documentation, bug reports, or feature requests.
 
