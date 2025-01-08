@@ -1,6 +1,6 @@
 /*
 keyforge95
-Copyright 2024 Nando Lawson
+Copyright 2025 Nando Lawson
 
 Licensed under the GPL, Version 3 <https://github.com/nandolawson/keyforge95/blob/main/LICENSE>.
 This file may not be copied, modified, or distributed except according to those terms.
@@ -49,11 +49,7 @@ pub(crate) fn generate_block(choice: crate::Choice) -> String {
     let rng = || OsRng.next_u32();
     // Determine which block of the product key will be generated
     match choice {
-        B => format!(
-            "{:03}{:02}",
-            rng() % 367,
-            4 + (rng() % 90)
-        ),
+        B => format!("{:03}{:02}", rng() % 367, 4 + (rng() % 90)),
         E => format!("{:05}", rng() % 100_000),
         _ => {
             let max_value: u32 = match choice {
