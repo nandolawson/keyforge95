@@ -32,7 +32,7 @@ rand_core = { version = "0.6.4", features = ["getrandom"] }
 
 [target.wasm32-unknown-unknown.dependencies]
 getrandom = { version = "0.2.15", features = ["js"] }
-wasm-bindgen = "0.2.95"
+wasm-bindgen = "0.2.99"
 
 [lints.clippy]
 cargo = "deny"
@@ -53,6 +53,7 @@ rust-2018-compatibility = "deny"
 rust-2018-idioms = "deny"
 rust-2021-compatibility = "deny"
 rust-2024-compatibility = "deny"
+unused = "deny"
 warnings = "deny"
 
 [profile.dev]
