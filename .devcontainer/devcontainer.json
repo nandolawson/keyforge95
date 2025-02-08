@@ -11,8 +11,6 @@
 				"tamasfe.even-better-toml"
 			],
 			"features": {
-				"ghcr.io/devcontainers/features/docker-in-docker:latest": {},
-				"ghcr.io/devcontainers/features/git:latest": {},
 				"ghcr.io/devcontainers/features/github-cli:latest": {}
 			},
 			"mounts": [
