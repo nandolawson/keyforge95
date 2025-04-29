@@ -1,0 +1,49 @@
+{
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"DavidAnson.vscode-markdownlint",
+				"dustypomerleau.rust-syntax",
+				"fill-labs.dependi",
+				"github.vscode-github-actions",
+				"rust-lang.rust-analyzer",
+				"tamasfe.even-better-toml",
+				"vadimcn.vscode-lldb"
+			],
+			"settings": {
+				"editor.formatOnSave": true,
+				"markdownlint.run": "onType",
+				"rust-analyzer.checkOnSave.command": "clippy",
+				"[rust]": {
+					"editor.defaultFormatter": "rust-lang.rust-analyzer",
+					"editor.formatOnSave": true
+				}
+			}
+		}
+	},
+	"features": {
+		"ghcr.io/devcontainers/features/github-cli:latest": {
+			"installDirectlyFromGitHubRelease": true,
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers/features/rust:latest": {
+			"targets": "",
+			"profile": "default",
+			"version": "latest"
+		}
+	},
+	"hostRequirements": {
+		"cpus": 1,
+		"gpu": false,
+		"memory": "1gb",
+		"storage": "4gb"
+	},
+	"image": "debian:latest",
+	"name": "keyforge95",
+	"onCreateCommand": {
+		"cargo": "cargo install wasm-pack",
+		"rustup": "rustup target add wasm32-unknown-unknown"
+	},
+	"postCreateCommand": "cargo generate-lockfile",
+	"postStartCommand": "rustup update"
+}
