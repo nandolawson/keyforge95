@@ -6,10 +6,17 @@ Licensed under the GPL, Version 3 <https://github.com/nandolawson/keyforge95/blo
 This file may not be copied, modified, or distributed except according to those terms.
 */
 
+use crate::{
+    Error::{self, InvalidFormat},
+    KeyType,
+};
+
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::wasm_bindgen;
 
 /// Tests if a product key is valid
+///
+/// If the given key is valid, the function will return either ``KeyType::OEM`` or ``KeyType::Retail``.
 ///
 /// # Examples
 /// ```
@@ -22,7 +29,7 @@ use wasm_bindgen::prelude::wasm_bindgen;
 ///     "33693-OEM-0000000-00000"
 /// ];
 /// for test_case in test_cases {
-///      assert!(validate_product_key(test_case));
+///      assert!(validate_product_key(test_case).is_ok());
 /// }
 /// ```
 ///
@@ -36,20 +43,29 @@ use wasm_bindgen::prelude::wasm_bindgen;
 ///     "123-4567-89-00-AB4"
 /// ];
 /// for test_case in test_cases {
-///     assert!(!validate_product_key(test_case));
+///     assert!(validate_product_key(test_case).is_err());
 /// }
 /// ```
-#[must_use]
+///
+/// # Errors
+/// This function can return two errors: ``InvalidFormat`` and ``InvalidKey``.
+///
+/// - ``InvalidFormat``: Product keys for Windows 95 and other compatible products can be either OEM or retail keys. If the format of the given key does not belong to either of them, this error will appear.
+/// - ``InvalidKey``: If the key has the right format, but isn't valid, the function will result this error.
 #[cfg_attr(target_arch = "wasm32", wasm_bindgen)]
-pub fn validate_product_key(product_key: &str) -> bool {
+pub fn validate_product_key(product_key: &str) -> Result<KeyType, Error> {
     // Check if the product key format is valid
     if !validate_format(product_key) {
-        return false;
+        return Err(InvalidFormat);
     }
     match product_key.len() {
-        11 => validate_block(&product_key[0..=2]) && validate_block(&product_key[4..=10]), // Retail product key
-        23 => validate_block(&product_key[0..=4]) && validate_block(&product_key[10..=17]), // OEM product key
-        _ => false, // Invalid length, always false
+        11 => (validate_block(&product_key[0..=2]) && validate_block(&product_key[4..=10]))
+            .then_some(KeyType::Retail)
+            .ok_or(Error::InvalidKey), // Retail product key
+        23 => (validate_block(&product_key[0..=4]) && validate_block(&product_key[10..=17]))
+            .then_some(KeyType::OEM)
+            .ok_or(Error::InvalidKey), // OEM product key
+        _ => unreachable!(),
     }
 }
 
@@ -67,6 +83,7 @@ pub(crate) fn validate_block(block: &str) -> bool {
                 && (4..=93).contains(&block[3..=4].parse::<u8>().unwrap()) // The last two digits must be a number between 4 and 93
         }
         7 | 8 => {
+            // Block C & D
             (block.len() == 8 || !block.contains('9')) && // The number 9 is not allowed for retail keys
             block[0..=6]
                 .chars()
@@ -75,7 +92,7 @@ pub(crate) fn validate_block(block: &str) -> bool {
                 % 7
                 == 0 // The sum of this block must be divisible by 7 with no remainder
         }
-        _ => false, // Only used if the block size is neither one of the above ones
+        _ => unreachable!(), // Only used if the block size is neither one of the above ones
     }
 }
 
