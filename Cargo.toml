@@ -17,7 +17,7 @@ license = "GPL-3.0"
 name = "keyforge95"
 readme = "README.md"
 repository = "https://github.com/nandolawson/keyforge95"
-version = "3.1.1"
+version = "4.0.0"
 
 [lib]
 crate-type = ["rlib", "cdylib"]
