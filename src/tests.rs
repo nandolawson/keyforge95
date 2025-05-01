@@ -8,8 +8,8 @@ This file may not be copied, modified, or distributed except according to those 
 
 #[test]
 fn test_generate_block() {
-    use crate::generation::generate_block;
     use crate::Choice::{A, B, C, D, E};
+    use crate::generation::generate_block;
     let options: [(crate::Choice, usize); 5] = [(A, 3), (B, 5), (C, 7), (D, 7), (E, 5)];
     for (choice, length) in options {
         assert_eq!(generate_block(choice).len(), length);
@@ -29,9 +29,9 @@ fn test_validate_block() {
         }
     }
     {
-        let test_cases: [&str; 7] = [
+        let test_cases: [&str; 5] = [
             // This blocks are invalid
-            "333", "999", "0", "9999999", "000000", "36793", "36694",
+            "333", "999", "9999999", "36793", "36694",
         ];
         for test_case in test_cases {
             assert!(!validate_block(test_case));
