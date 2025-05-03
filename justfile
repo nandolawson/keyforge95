@@ -59,7 +59,7 @@ build PROFILE="debug":
 clean:
     echo "Remove target directory..."
     cargo clean --quiet && \
-    [ -d pkg ] && rm -rf pkg && \
+    if [ -d pkg ]; then rm -rf pkg; fi && \
     echo "Done!"
 
 [doc('Generate documentation')]
