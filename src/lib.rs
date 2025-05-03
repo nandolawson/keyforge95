@@ -6,6 +6,8 @@
 )]
 #![doc = include_str!("../README.md")] // Adding the README to the documentation
 
+#[cfg(feature = "generation")]
+mod generation;
 mod modals;
 #[cfg(test)]
 mod tests;
@@ -18,9 +20,5 @@ pub use crate::{
     },
     validation::validate_product_key,
 };
-
-#[cfg(feature = "generation")]
-mod generation;
-
 #[cfg(feature = "generation")]
 pub use generation::generate_product_key;
