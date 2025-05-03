@@ -6,9 +6,9 @@ Licensed under the GPL, Version 3 <https://github.com/nandolawson/keyforge95/blo
 This file may not be copied, modified, or distributed except according to those terms.
 */
 
-use crate::{
+use crate::modals::{
     Choice::{A, B, C, D, E},
-    KeyType::{Retail, OEM},
+    KeyType::{Oem, Retail},
 };
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::wasm_bindgen;
@@ -18,22 +18,22 @@ use wasm_bindgen::prelude::wasm_bindgen;
 /// # Example
 ///
 /// ```
-/// use keyforge95::prelude::*;
+/// use keyforge95::*;
 /// for _ in 0..10 {
-///     let product_key: String = generate_product_key(Retail); // Both, "Retail" and "OEM" are available
+///     let product_key: String = generate_product_key(Retail); // Both, "Retail" and "Oem" are available
 ///     assert_eq!(product_key.len(), 11);
 ///     assert_eq!(product_key.chars().nth(3).unwrap(), '-');
 /// }
 /// ```
 #[must_use]
 #[cfg_attr(target_arch = "wasm32", wasm_bindgen)]
-pub fn generate_product_key(key_type: crate::KeyType) -> String {
+pub fn generate_product_key(key_type: crate::modals::KeyType) -> String {
     // Use generate_block() for product key generation and print it with the right format
     match key_type {
         Retail => {
             format!("{}-{}", generate_block(A), generate_block(C))
         }
-        OEM => {
+        Oem => {
             format!(
                 "{}-OEM-{}-{}",
                 generate_block(B),
@@ -44,7 +44,7 @@ pub fn generate_product_key(key_type: crate::KeyType) -> String {
     }
 }
 
-pub(crate) fn generate_block(choice: crate::Choice) -> String {
+pub(crate) fn generate_block(choice: crate::modals::Choice) -> String {
     use rand_core::{OsRng, RngCore};
     let rng = || OsRng.next_u32();
     // Determine which block of the product key will be generated

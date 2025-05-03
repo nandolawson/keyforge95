@@ -8,9 +8,9 @@ This file may not be copied, modified, or distributed except according to those 
 
 #[test]
 fn test_generate_block() {
-    use crate::Choice::{A, B, C, D, E};
     use crate::generation::generate_block;
-    let options: [(crate::Choice, usize); 5] = [(A, 3), (B, 5), (C, 7), (D, 7), (E, 5)];
+    use crate::modals::Choice::{A, B, C, D, E};
+    let options: [(crate::modals::Choice, usize); 5] = [(A, 3), (B, 5), (C, 7), (D, 7), (E, 5)];
     for (choice, length) in options {
         assert_eq!(generate_block(choice).len(), length);
     }

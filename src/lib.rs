@@ -14,52 +14,20 @@ This file may not be copied, modified, or distributed except according to those 
 )]
 #![doc = include_str!("../README.md")] // Adding the README to the documentation
 
-use std::fmt::{Debug, Formatter, Result};
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::wasm_bindgen;
 
-#[derive(Clone, Copy, Debug)]
-enum Choice {
-    A,
-    B,
-    C,
-    D,
-    E,
-}
-
-#[cfg_attr(target_arch = "wasm32", wasm_bindgen)]
-pub enum Error {
-    InvalidKey,
-    InvalidFormat,
-}
-
-impl Debug for Error {
-    fn fmt(&self, f: &mut Formatter<'_>) -> Result {
-        let message = match self {
-            Error::InvalidKey => "Invalid key",
-            Error::InvalidFormat => "Invalid format",
-        };
-        write!(f, "{message}")
-    }
-}
-
-#[cfg_attr(target_arch = "wasm32", wasm_bindgen)]
-#[derive(Clone, Copy, Debug)]
-pub enum KeyType {
-    OEM,
-    Retail,
-}
-
 mod generation;
+mod modals;
 #[cfg(test)]
 mod tests;
 mod validation;
 
-pub mod prelude {
-    pub use crate::{
-        generation::generate_product_key,
-        validation::validate_product_key,
+pub use crate::{
+    generation::generate_product_key,
+    modals::{
         Error::{InvalidFormat, InvalidKey},
-        KeyType::{Retail, OEM},
-    };
-}
+        KeyType::{Oem, Retail},
+    },
+    validation::validate_product_key,
+};

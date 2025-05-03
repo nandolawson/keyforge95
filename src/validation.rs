@@ -6,7 +6,7 @@ Licensed under the GPL, Version 3 <https://github.com/nandolawson/keyforge95/blo
 This file may not be copied, modified, or distributed except according to those terms.
 */
 
-use crate::{
+use crate::modals::{
     Error::{self, InvalidFormat},
     KeyType,
 };
@@ -16,11 +16,11 @@ use wasm_bindgen::prelude::wasm_bindgen;
 
 /// Tests if a product key is valid
 ///
-/// If the given key is valid, the function will return either ``KeyType::OEM`` or ``KeyType::Retail``.
+/// If the given key is valid, the function will return either ``KeyType::Oem`` or ``KeyType::Retail``.
 ///
 /// # Examples
 /// ```
-/// use keyforge95::prelude::*;
+/// use keyforge95::*;
 /// let test_cases: [&str; 5] = [ // This keys should be valid
 ///     "111-1111111",
 ///     "000-0000000",
@@ -34,7 +34,7 @@ use wasm_bindgen::prelude::wasm_bindgen;
 /// ```
 ///
 /// ```
-/// use keyforge95::prelude::*;
+/// use keyforge95::*;
 /// let test_cases: [&str; 5] = [ // This keys should be invalid
 ///     "111-1111112",
 ///     "ABC-DEF-GHI",
@@ -63,7 +63,7 @@ pub fn validate_product_key(product_key: &str) -> Result<KeyType, Error> {
             .then_some(KeyType::Retail)
             .ok_or(Error::InvalidKey), // Retail product key
         23 => (validate_block(&product_key[0..=4]) && validate_block(&product_key[10..=17]))
-            .then_some(KeyType::OEM)
+            .then_some(KeyType::Oem)
             .ok_or(Error::InvalidKey), // OEM product key
         _ => unreachable!(),
     }
