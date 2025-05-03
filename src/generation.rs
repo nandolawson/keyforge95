@@ -6,7 +6,7 @@ use crate::modals::{
 use wasm_bindgen::prelude::wasm_bindgen;
 
 /// Generates a valid product key
-/// 
+///
 /// This function is available via the feature `generation`
 ///
 /// # Example
@@ -39,29 +39,30 @@ pub fn generate_product_key(key_type: crate::modals::KeyType) -> String {
 }
 
 pub(crate) fn generate_block(choice: crate::modals::Choice) -> String {
-    use rand_core::{OsRng, RngCore};
-    let rng = || OsRng.next_u32();
-    // Determine which block of the product key will be generated
+    let rng = || {
+        let mut buf = [0u8; 4];
+        getrandom::fill(&mut buf).unwrap_or_else(|_| std::process::abort());
+        u32::from_ne_bytes(buf)
+    };
+
     match choice {
         B => format!("{:03}{:02}", rng() % 367, 4 + (rng() % 90)),
         E => format!("{:05}", rng() % 100_000),
         _ => {
             let max_value: u32 = match choice {
-                A => 998,       // Number range for block A
-                C => 8_888_888, // Number range for block C
-                D => 9_999_999, // Number range for block D
-                _ => 0,         // Dummy value for block B & E
+                A => 998,
+                C => 8_888_888,
+                D => 9_999_999,
+                _ => 0,
             };
             let length: usize = match choice {
-                A => 3,     // Length of block A
-                C | D => 7, // Length of block C & D
-                _ => 0,     // Dummy value for block B & E
+                A => 3,
+                C | D => 7,
+                _ => 0,
             };
-            // Generate a block and validate it
             loop {
                 use crate::validation::validate_block;
-                // Loop this operation if it fails
-                let block: String = format!("{:0length$}", rng() % (max_value + 1)); // Generate a block of the product
+                let block = format!("{:0length$}", rng() % (max_value + 1));
                 if validate_block(&format!(
                     "{}{}",
                     block,
