@@ -74,6 +74,7 @@ Install wasm32 as a target in rustup: _`rustup target add wasm32-unknown-unknown
 
 This project also offers a dev container containing all necessary and additional dependencies. These include:
 
+- Rust toolchain
 - cargo-edit
 - just
 - wasm-pack
