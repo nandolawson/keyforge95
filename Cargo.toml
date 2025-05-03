@@ -34,7 +34,7 @@ generation = []
 rand_core = { version = "0.6.4", features = ["getrandom"] }
 
 [target.wasm32-unknown-unknown.dependencies]
-getrandom = { version = "0.2.15", features = ["js"] }
+getrandom = { version = "0.3.2", features = ["js"] }
 wasm-bindgen = "0.2.100"
 
 [lints.clippy]
