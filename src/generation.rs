@@ -14,6 +14,8 @@ use crate::modals::{
 use wasm_bindgen::prelude::wasm_bindgen;
 
 /// Generates a valid product key
+/// 
+/// This function is available via the feature `generation`
 ///
 /// # Example
 ///
