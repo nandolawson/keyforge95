@@ -1,11 +1,3 @@
-/*
-keyforge95
-Copyright 2025 Nando Lawson
-
-Licensed under the GPL, Version 3 <https://github.com/nandolawson/keyforge95/blob/main/LICENSE>.
-This file may not be copied, modified, or distributed except according to those terms.
-*/
-
 use crate::modals::{
     Error::{self, InvalidFormat},
     KeyType,
