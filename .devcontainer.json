@@ -13,10 +13,12 @@
 			"settings": {
 				"editor.formatOnSave": true,
 				"markdownlint.run": "onType",
-				"rust-analyzer.checkOnSave.command": "clippy",
+				"rust-analyzer.cargo.features": [
+					"generation"
+				],
+				"rust-analyzer.checkOnSave.command": true,
 				"[rust]": {
-					"editor.defaultFormatter": "rust-lang.rust-analyzer",
-					"editor.formatOnSave": true
+					"editor.defaultFormatter": "rust-lang.rust-analyzer"
 				}
 			}
 		}
