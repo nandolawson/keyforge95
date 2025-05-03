@@ -6,16 +6,19 @@ on:
       - '.github/**'
       - '.gitignore'
       - 'CONTRIBUTING.md'
+      - 'CODE_OF_CONDUCT.md'
+      - 'justfile'
       - 'LICENSE'
     branches: [ "main" ]
   pull_request:
     paths-ignore:
-      - 'README.md'
-      - 'LICENSE'
       - '.devcontainer/**'
       - '.github/**'
       - '.gitignore'
       - 'CONTRIBUTING.md'
+      - 'CODE_OF_CONDUCT.md'
+      - 'justfile'
+      - 'LICENSE'
     branches: [ "main" ]
 env:
   CARGO_TERM_COLOR: always
