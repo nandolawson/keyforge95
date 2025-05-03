@@ -17,7 +17,7 @@ license = "GPL-3.0"
 name = "keyforge95"
 readme = "README.md"
 repository = "https://github.com/nandolawson/keyforge95"
-version = "4.0.0"
+version = "4.1.0"
 
 [lib]
 crate-type = ["rlib", "cdylib"]
@@ -28,13 +28,13 @@ proc-macro = false
 test = true
 
 [features]
-generation = []
+generation = ["getrandom"]
 
 [dependencies]
-getrandom = "0.3.2"
+getrandom = { version = "0.3.2", optional = true }
 
 [target.wasm32-unknown-unknown.dependencies]
-getrandom = { version = "0.3.2", features = ["wasm_js"] }
+getrandom = { version = "0.3.2", features = ["wasm_js"], optional = true }
 wasm-bindgen = "0.2.100"
 
 [lints.clippy]
