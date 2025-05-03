@@ -6,6 +6,7 @@ Licensed under the GPL, Version 3 <https://github.com/nandolawson/keyforge95/blo
 This file may not be copied, modified, or distributed except according to those terms.
 */
 
+#[cfg(feature = "generation")]
 #[test]
 fn test_generate_block() {
     use crate::generation::generate_block;

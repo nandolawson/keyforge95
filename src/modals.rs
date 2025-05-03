@@ -1,5 +1,8 @@
 use std::fmt::{Debug, Formatter, Result};
+#[cfg(target_arch = "wasm32")]
+use wasm_bindgen::prelude::wasm_bindgen;
 
+#[cfg(feature = "generation")]
 #[derive(Clone, Copy, Debug)]
 pub(crate) enum Choice {
     A,

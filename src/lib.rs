@@ -14,20 +14,21 @@ This file may not be copied, modified, or distributed except according to those 
 )]
 #![doc = include_str!("../README.md")] // Adding the README to the documentation
 
-#[cfg(target_arch = "wasm32")]
-use wasm_bindgen::prelude::wasm_bindgen;
-
-mod generation;
 mod modals;
 #[cfg(test)]
 mod tests;
 mod validation;
 
 pub use crate::{
-    generation::generate_product_key,
     modals::{
         Error::{InvalidFormat, InvalidKey},
         KeyType::{Oem, Retail},
     },
     validation::validate_product_key,
 };
+
+#[cfg(feature = "generation")]
+mod generation;
+
+#[cfg(feature = "generation")]
+pub use generation::generate_product_key;
