@@ -6,6 +6,7 @@
 				"dustypomerleau.rust-syntax",
 				"fill-labs.dependi",
 				"github.vscode-github-actions",
+				"nefrob.vscode-just-syntax",
 				"rust-lang.rust-analyzer",
 				"tamasfe.even-better-toml",
 				"vadimcn.vscode-lldb"
@@ -43,7 +44,7 @@
 	"image": "debian:latest",
 	"name": "keyforge95",
 	"onCreateCommand": {
-		"cargo": "cargo install wasm-pack",
+		"cargo": "cargo install carg-edit just wasm-pack",
 		"rustup": "rustup target add wasm32-unknown-unknown"
 	},
 	"postCreateCommand": "cargo generate-lockfile",

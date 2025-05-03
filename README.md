@@ -60,6 +60,8 @@ match validate_product_key(product_key) {
 
 ## Compiling
 
+> This project also contains a justfile. It is therefore recommended to use just.
+
 ### Rust
 
 No extra steps necessary. Just run _`cargo build`_. If you also want to compile the generation feature, you need to run `cargo build --features generation`.
@@ -67,6 +69,15 @@ No extra steps necessary. Just run _`cargo build`_. If you also want to compile 
 ### WebAssembly
 
 Install wasm32 as a target in rustup: _`rustup target add wasm32-unknown-unknown`_ and compile the project: _`cargo build --target wasm32-unknown-unknown`_. If you want to use the generation feature, you need to run `cargo build --target wasm32-unknown-unknown --features generation`. It is recommended, but not necessary, to compile the project via wasm-pack instead. To do this, simply run _`cargo install wasm-pack`_ and then _`wasm-pack build --target nodejs`_ / `wasm-pack build --target nodejs --features generation` after installing the target mentioned above. The finished build will then end up in the pkg folder in the project root.
+
+## Dev Container
+
+This project also offers a dev container containing all necessary and additional dependencies. These include:
+
+- cargo-edit
+- just
+- wasm-pack
+- Some useful VS Code extensions
 
 ## Contributing
 
