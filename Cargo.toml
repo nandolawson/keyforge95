@@ -4,20 +4,22 @@ categories = ["algorithms", "development-tools"]
 description = "Library for product key generation / validation for Windows 95 and other Microsoft products"
 edition = "2024"
 exclude = [
-    ".devcontainer/",
     ".github/",
     "pkg/",
     "target/",
+    ".devcontainer",
     ".gitignore",
+    "Cargo.lock",
+    "CODE_OF_CONDUCT.md",
     "CONTRIBUTING.md",
-    "Dockerfile",
+    "justfile",
 ]
 keywords = ["generator", "no_std", "product_key", "validator", "wasm"]
 license = "GPL-3.0"
 name = "keyforge95"
 readme = "README.md"
 repository = "https://github.com/nandolawson/keyforge95"
-version = "4.1.0"
+version = "4.1.1"
 
 [lib]
 crate-type = ["rlib", "cdylib"]
