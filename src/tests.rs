@@ -1,8 +1,10 @@
 #[cfg(feature = "generation")]
 #[test]
 fn test_generate_block() {
-    use crate::generation::generate_block;
-    use crate::modals::Choice::{A, B, C, D, E};
+    use crate::{
+        generation::generate_block,
+        modals::Choice::{A, B, C, D, E},
+    };
     let options: [(crate::modals::Choice, usize); 5] = [(A, 3), (B, 5), (C, 7), (D, 7), (E, 5)];
     for (choice, length) in options {
         assert_eq!(generate_block(choice).len(), length);

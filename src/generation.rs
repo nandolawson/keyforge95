@@ -2,8 +2,6 @@ use crate::modals::{
     Choice::{A, B, C, D, E},
     KeyType::{Oem, Retail},
 };
-#[cfg(target_arch = "wasm32")]
-use wasm_bindgen::prelude::wasm_bindgen;
 
 /// Generates a valid product key
 ///
@@ -20,7 +18,7 @@ use wasm_bindgen::prelude::wasm_bindgen;
 /// }
 /// ```
 #[must_use]
-#[cfg_attr(target_arch = "wasm32", wasm_bindgen)]
+#[cfg_attr(target_arch = "wasm32", wasm_bindgen::prelude::wasm_bindgen)]
 pub fn generate_product_key(key_type: crate::modals::KeyType) -> String {
     // Use generate_block() for product key generation and print it with the right format
     match key_type {
@@ -41,7 +39,7 @@ pub fn generate_product_key(key_type: crate::modals::KeyType) -> String {
 pub(crate) fn generate_block(choice: crate::modals::Choice) -> String {
     let rng = || {
         let mut buf = [0u8; 4];
-        getrandom::fill(&mut buf).unwrap_or_else(|_| std::process::abort());
+        getrandom::fill(&mut buf).unwrap();
         u32::from_ne_bytes(buf)
     };
 
@@ -53,12 +51,12 @@ pub(crate) fn generate_block(choice: crate::modals::Choice) -> String {
                 A => 998,
                 C => 8_888_888,
                 D => 9_999_999,
-                _ => 0,
+                _ => unreachable!(),
             };
             let length: usize = match choice {
                 A => 3,
                 C | D => 7,
-                _ => 0,
+                _ => unreachable!(),
             };
             loop {
                 use crate::validation::validate_block;

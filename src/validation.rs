@@ -3,9 +3,6 @@ use crate::modals::{
     KeyType,
 };
 
-#[cfg(target_arch = "wasm32")]
-use wasm_bindgen::prelude::wasm_bindgen;
-
 /// Tests if a product key is valid
 ///
 /// If the given key is valid, the function will return either ``KeyType::Oem`` or ``KeyType::Retail``.
@@ -44,7 +41,7 @@ use wasm_bindgen::prelude::wasm_bindgen;
 ///
 /// - ``InvalidFormat``: Product keys for Windows 95 and other compatible products can be either OEM or retail keys. If the format of the given key does not belong to either of them, this error will appear.
 /// - ``InvalidKey``: If the key has the right format, but isn't valid, the function will result this error.
-#[cfg_attr(target_arch = "wasm32", wasm_bindgen)]
+#[cfg_attr(target_arch = "wasm32", wasm_bindgen::prelude::wasm_bindgen)]
 pub fn validate_product_key(product_key: &str) -> Result<KeyType, Error> {
     // Check if the product key format is valid
     if !validate_format(product_key) {
