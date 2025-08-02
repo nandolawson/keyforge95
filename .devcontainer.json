@@ -41,7 +41,7 @@
 		"memory": "1gb",
 		"storage": "4gb"
 	},
-	"image": "debian:latest",
+	"image": "debian:stable-slim",
 	"name": "keyforge95",
 	"onCreateCommand": {
 		"cargo": "cargo install cargo-edit just wasm-pack",
