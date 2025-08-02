@@ -23,8 +23,10 @@ VERSION := `cargo pkgid | sed -rn s'/^.*#(.*)$/\1/p'`
 
 alias b := build
 alias c := clean
+alias d := doc
 alias f := format
 alias n := name
+alias t := test
 alias u := upgrade
 alias v := version
 
@@ -78,6 +80,10 @@ format:
 [doc('Show name of the project')]
 name:
     echo "{{ NAME }}"
+
+[doc("Runs all available tests")]
+test:
+    cargo test --features generation
 
 [doc('Upgrade dependencies')]
 upgrade:
