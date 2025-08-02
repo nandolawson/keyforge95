@@ -17,7 +17,7 @@
 				"rust-analyzer.cargo.features": [
 					"generation"
 				],
-				"rust-analyzer.checkOnSave.command": true,
+				"rust-analyzer.checkOnSave": true,
 				"[rust]": {
 					"editor.defaultFormatter": "rust-lang.rust-analyzer"
 				}
@@ -44,7 +44,7 @@
 	"image": "debian:latest",
 	"name": "keyforge95",
 	"onCreateCommand": {
-		"cargo": "cargo install carg-edit just wasm-pack",
+		"cargo": "cargo install cargo-edit just wasm-pack",
 		"rustup": "rustup target add wasm32-unknown-unknown"
 	},
 	"postCreateCommand": "cargo generate-lockfile",
