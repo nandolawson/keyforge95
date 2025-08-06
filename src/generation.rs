@@ -42,33 +42,21 @@ pub(crate) fn generate_block(choice: crate::modals::Choice) -> String {
         getrandom::fill(&mut buf).unwrap();
         u32::from_ne_bytes(buf)
     };
-
-    match choice {
-        B => format!("{:03}{:02}", rng() % 367, 4 + (rng() % 90)),
-        E => format!("{:05}", rng() % 100_000),
-        _ => {
-            let max_value: u32 = match choice {
-                A => 998,
-                C => 8_888_888,
-                D => 9_999_999,
-                _ => unreachable!(),
-            };
-            let length: usize = match choice {
-                A => 3,
-                C | D => 7,
-                _ => unreachable!(),
-            };
-            loop {
-                use crate::validation::validate_block;
-                let block = format!("{:0length$}", rng() % (max_value + 1));
-                if validate_block(&format!(
-                    "{}{}",
-                    block,
-                    if matches!(choice, D) { "-" } else { "" }
-                )) {
-                    return block;
-                }
-            }
+    let (max_value, length) = match choice {
+        A => (998, 3),
+        B => return format!("{:03}{:02}", rng() % 367, 4 + rng() % 90),
+        C => (8_888_888, 7),
+        D => (9_999_999, 7),
+        E => return format!("{:05}", rng() % 100_000),
+    };
+    loop {
+        let block = format!("{:0length$}", rng() % (max_value + 1));
+        if crate::validation::validate_block(&format!(
+            "{}{}",
+            block,
+            if matches!(choice, D) { "-" } else { "" }
+        )) {
+            return block;
         }
     }
 }
