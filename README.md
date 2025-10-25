@@ -47,7 +47,7 @@ println("Generated product key: {}", product_key);
 
 ### Validate
 
-To check the validity of a key, add keyforge95 to your project and use _`validate_product_key("key")`_. This function returns either the type of key (OEM / Retail) or an error (``InvalidFormat`` / ``InvalidKey``). It is important that the right formatting (_`XXX-XXXXXXX`_) is used for the product key. Otherwise, the validation will fail.
+To check the validity of a key, add keyforge95 to your project and use _`validate_product_key("key")`_. This function returns either the type of key (OEM / Retail) or an error (``InvalidFormat`` / ``InvalidKey``). It is important that the right formatting (_`XXX-XXXXXXX`_ / _XXXXX-OEM-XXXXXXX-XXXXX_`) is used for the product key. Otherwise, the validation will fail.
 
 ```rs
 use keyforge95::*;
@@ -84,3 +84,4 @@ This project also offers a dev container containing all necessary and additional
 
 Anyone who wants to contribute is more than welcome to do so. I would be delighted to learn from the contributions of other users. If you find a bug or have a feature in mind that you think would be useful, please feel free to create a pull request on GitHub.
 If you decide to fork this project, please make sure to adhere to the [license](https://github.com/nandolawson/keyforge95/blob/master/LICENSE) and the [contribution guidelines](https://github.com/nandolawson/keyforge95/blob/master/CONTRIBUTING.md). Your involvement and feedback are highly appreciated!
+
